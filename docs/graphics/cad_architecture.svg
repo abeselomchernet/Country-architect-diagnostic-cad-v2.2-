@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FAF8F5; }
+      .border-line { stroke: #E7E5E4; stroke-width: 1.5; fill: none; }
+      .grid-line { stroke: #F5F5F4; stroke-width: 1; }
+      .accent-line { stroke: #7F1D1D; stroke-width: 2; fill: none; }
+      .accent-dot { fill: #7F1D1D; }
+      .title { font-family: "Georgia", serif; font-size: 22px; font-weight: bold; fill: #1C1917; }
+      .subtitle { font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; fill: #78716C; letter-spacing: 1.5px; }
+      .pillar-header { font-family: "Georgia", serif; font-size: 15px; font-weight: bold; fill: #7F1D1D; }
+      .pillar-subheader { font-family: "Inter", sans-serif; font-size: 10px; font-weight: bold; fill: #78716C; letter-spacing: 1px; }
+      .body-text { font-family: "Inter", sans-serif; font-size: 11.5px; fill: #44403C; leading: 1.4; }
+      .mono-text { font-family: "JetBrains Mono", monospace; font-size: 9.5px; fill: #78716C; }
+      .box-bg { fill: #FFFFFF; stroke: #D6D3D1; stroke-width: 1; }
+      .box-bg-active { fill: #FFFDFB; stroke: #7F1D1D; stroke-width: 1.5; }
+      .connection-line { stroke: #A8A29E; stroke-width: 1.2; stroke-dasharray: 4,4; fill: none; }
+      .arrow { fill: #7F1D1D; }
+    </style>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" class="bg" />
+  <line x1="100" y1="0" x2="100" y2="600" class="grid-line" />
+  <line x1="200" y1="0" x2="200" y2="600" class="grid-line" />
+  <line x1="300" y1="0" x2="300" y2="600" class="grid-line" />
+  <line x1="400" y1="0" x2="400" y2="600" class="grid-line" />
+  <line x1="500" y1="0" x2="500" y2="600" class="grid-line" />
+  <line x1="600" y1="0" x2="600" y2="600" class="grid-line" />
+  <line x1="700" y1="0" x2="700" y2="600" class="grid-line" />
+  <line x1="0" y1="100" x2="800" y2="100" class="grid-line" />
+  <line x1="0" y1="200" x2="800" y2="200" class="grid-line" />
+  <line x1="0" y1="300" x2="800" y2="300" class="grid-line" />
+  <line x1="0" y1="400" x2="800" y2="400" class="grid-line" />
+  <line x1="0" y1="500" x2="800" y2="500" class="grid-line" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="750" height="550" class="border-line" />
+  <circle cx="25" cy="25" r="3" class="accent-dot" />
+  <circle cx="775" cy="25" r="3" class="accent-dot" />
+  <circle cx="25" cy="575" r="3" class="accent-dot" />
+  <circle cx="775" cy="575" r="3" class="accent-dot" />
+
+  <!-- Header -->
+  <text x="50" y="65" class="title">Country Architect Diagnostic (CAD) v2.2 Architecture</text>
+  <text x="50" y="85" class="subtitle">FOUR STRUCTURAL PILLARS FOR SYSTEMIC MARKET FORMATION</text>
+  <line x1="50" y1="95" x2="750" y2="95" class="accent-line" />
+
+  <!-- PILLAR I: GSV -->
+  <g transform="translate(50, 115)">
+    <rect width="330" height="200" class="box-bg" />
+    <path d="M 0 0 L 330 0" stroke="#7F1D1D" stroke-width="3" />
+    <text x="20" y="25" class="pillar-header">Pillar I: Grassroots System Viability (GSV)</text>
+    <text x="20" y="42" class="pillar-subheader">REAL-WORLD DEMAND AND DELIVERY INTEGRITY</text>
+    <line x1="20" y1="50" x2="310" y2="50" stroke="#E7E5E4" stroke-width="1" />
+    
+    <text x="20" y="70" class="body-text" font-weight="bold">1. Demand Reality</text>
+    <text x="35" y="85" class="body-text">Identifies immediate pains, substitutions &amp; utility density.</text>
+    
+    <text x="20" y="105" class="body-text" font-weight="bold">2. Delivery Infrastructure</text>
+    <text x="35" y="120" class="body-text">Evaluates agent footprint, USSD reach &amp; offline structures.</text>
+    
+    <text x="20" y="140" class="body-text" font-weight="bold">3. Trust and Economics</text>
+    <text x="35" y="155" class="body-text">Measures cybersecurity, fraud and sustainable micro-margins.</text>
+    <text x="20" y="185" class="mono-text">GSV INDEX Weight: 35% of overall ARI</text>
+  </g>
+
+  <!-- PILLAR II: ITC -->
+  <g transform="translate(420, 115)">
+    <rect width="330" height="200" class="box-bg" />
+    <path d="M 0 0 L 330 0" stroke="#7F1D1D" stroke-width="3" />
+    <text x="20" y="25" class="pillar-header">Pillar II: Institutional Capacity (ITC)</text>
+    <text x="20" y="42" class="pillar-subheader">LEGIBILITY AND TRANSLATION CAPABILITY</text>
+    <line x1="20" y1="50" x2="310" y2="50" stroke="#E7E5E4" stroke-width="1" />
+    
+    <text x="20" y="70" class="body-text" font-weight="bold">1. Capital Presence</text>
+    <text x="35" y="85" class="body-text">Risk appetite, FX availability, and DFI participation levels.</text>
+    
+    <text x="20" y="105" class="body-text" font-weight="bold">2. Data Legibility</text>
+    <text x="35" y="120" class="body-text">Digital ID integration (Fayda mapping), registry &amp; bureaus.</text>
+    
+    <text x="20" y="140" class="body-text" font-weight="bold">3. Regulatory &amp; Markets</text>
+    <text x="35" y="155" class="body-text">ESX exchanges, asset securitization (ABS), regulatory sandboxes.</text>
+    <text x="20" y="185" class="mono-text">ITC INDEX Weight: 35% of overall ARI</text>
+  </g>
+
+  <!-- Connection and translation bridge labels -->
+  <line x1="380" y1="215" x2="420" y2="215" class="connection-line" />
+  <polygon points="405,210 405,220 415,215" class="arrow" />
+  <polygon points="395,210 395,220 385,215" class="arrow" />
+
+  <!-- PILLAR III: DYNAMICS -->
+  <g transform="translate(50, 345)">
+    <rect width="330" height="200" class="box-bg" />
+    <path d="M 0 0 L 330 0" stroke="#78716C" stroke-width="3" />
+    <text x="20" y="25" class="pillar-header" style="fill: #1C1917;">Pillar III: System Dynamics</text>
+    <text x="20" y="42" class="pillar-subheader">FRICTON TAXONOMY AND SYSTEM LOCKS</text>
+    <line x1="20" y1="50" x2="310" y2="50" stroke="#E7E5E4" stroke-width="1" />
+    
+    <text x="20" y="70" class="body-text" font-weight="bold">1. Lock Intensity Coefficient (LIC)</text>
+    <text x="35" y="85" class="body-text">LIC = [(10 - GSV) * (10 - ITC)] / 10. Computes path dependency.</text>
+    
+    <text x="20" y="105" class="body-text" font-weight="bold">2. Momentum and Decoupling</text>
+    <text x="35" y="120" class="body-text">Quantifies standard index change metrics over a time delta.</text>
+    
+    <text x="20" y="140" class="body-text" font-weight="bold">3. Friction Taxonomy</text>
+    <text x="35" y="155" class="body-text">Diagnoses core errors (Information, Incentives, Trust, Regs).</text>
+    <text x="20" y="185" class="mono-text">DYNAMICS Weight: 20% of overall ARI</text>
+  </g>
+
+  <!-- PILLAR IV: FEASIBILITY -->
+  <g transform="translate(420, 345)">
+    <rect width="330" height="200" class="box-bg-active" />
+    <path d="M 0 0 L 330 0" stroke="#7F1D1D" stroke-width="3" />
+    <text x="20" y="25" class="pillar-header">Pillar IV: Architect Feasibility (AFL)</text>
+    <text x="20" y="42" class="pillar-subheader">CAPACITY TO INTERVENE AND DELIVER SYSTEM</text>
+    <line x1="20" y1="50" x2="310" y2="50" stroke="#E7E5E4" stroke-width="1" />
+    
+    <text x="20" y="70" class="body-text" font-weight="bold">1. Political Capital and Access</text>
+    <text x="35" y="85" class="body-text">Sovereign partnership channels and execution mandate.</text>
+    
+    <text x="20" y="105" class="body-text" font-weight="bold">2. Capital Adequacy</text>
+    <text x="35" y="120" class="body-text">Internal resources to fund first-mile translation structures.</text>
+    
+    <text x="20" y="140" class="body-text" font-weight="bold">3. Technical Execution and Trust</text>
+    <text x="35" y="155" class="body-text">Ability to command local agent networks and secure trust.</text>
+    <text x="20" y="185" class="mono-text">AFL Weight: 10% of overall ARI</text>
+  </g>
+
+  <!-- Vertical connection dynamics -->
+  <line x1="215" y1="315" x2="215" y2="345" class="connection-line" />
+  <line x1="585" y1="315" x2="585" y2="345" class="connection-line" />
+
+  <!-- Footnote -->
+  <text x="50" y="565" class="mono-text">Country Architect Diagnostic v2.2 Framework | JEL Classification: O10, O16, O17 • Prepared by Abeselom Girum Chernet</text>
+</svg>

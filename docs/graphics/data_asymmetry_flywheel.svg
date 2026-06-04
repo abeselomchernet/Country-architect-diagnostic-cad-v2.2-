@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FAF8F5; }
+      .border-line { stroke: #E7E5E4; stroke-width: 1.5; fill: none; }
+      .grid-line { stroke: #F5F5F4; stroke-width: 1; }
+      .accent-line { stroke: #7F1D1D; stroke-width: 2; fill: none; }
+      .title { font-family: "Georgia", serif; font-size: 22px; font-weight: bold; fill: #1C1917; }
+      .subtitle { font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; fill: #78716C; letter-spacing: 1.5px; }
+      .label-large { font-family: "Georgia", serif; font-size: 15px; font-weight: bold; fill: #1C1917; }
+      .body-text { font-family: "Inter", sans-serif; font-size: 11.5px; fill: #44403C; }
+      .mono-text { font-family: "JetBrains Mono", monospace; font-size: 9.5px; fill: #78716C; }
+      .flow-box-red { fill: #FEF2F2; stroke: #7F1D1D; stroke-width: 1.5; }
+      .flow-box-neutral { fill: #FFFFFF; stroke: #D6D3D1; stroke-width: 1; }
+      .flow-arrow { stroke: #7F1D1D; stroke-width: 1.5; stroke-dasharray: 4, 2; fill: none; }
+      .head-marker { fill: #7F1D1D; }
+    </style>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" class="bg" />
+  <line x1="100" y1="0" x2="100" y2="600" class="grid-line" />
+  <line x1="200" y1="0" x2="200" y2="600" class="grid-line" />
+  <line x1="300" y1="0" x2="300" y2="600" class="grid-line" />
+  <line x1="400" y1="0" x2="400" y2="600" class="grid-line" />
+  <line x1="500" y1="0" x2="500" y2="600" class="grid-line" />
+  <line x1="600" y1="0" x2="600" y2="600" class="grid-line" />
+  <line x1="700" y1="0" x2="700" y2="600" class="grid-line" />
+  <line x1="0" y1="100" x2="800" y2="100" class="grid-line" />
+  <line x1="0" y1="200" x2="800" y2="200" class="grid-line" />
+  <line x1="0" y1="300" x2="800" y2="300" class="grid-line" />
+  <line x1="0" y1="400" x2="800" y2="400" class="grid-line" />
+  <line x1="0" y1="500" x2="800" y2="500" class="grid-line" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="750" height="550" class="border-line" />
+
+  <!-- Header -->
+  <text x="50" y="65" class="title">The Data Asymmetry Flywheel &amp; Legibility Mapping</text>
+  <text x="50" y="85" class="subtitle">MAPPING DYNAMICS POST ARCHITECT INTERVENTION LAYERS</text>
+  <line x1="50" y1="95" x2="750" y2="95" class="accent-line" />
+
+  <!-- Descriptions -->
+  <text x="50" y="130" class="label-large">Sovereign Stranded Capital loop vs. Active Translation Pathway</text>
+
+  <!-- LEFT: STALEMATE LOOP (The Negative Vicious Cycle) -->
+  <g transform="translate(50, 150)">
+    <rect width="320" height="380" class="flow-box-neutral" />
+    <path d="M 0 0 L 320 0" stroke="#78716C" stroke-width="3" />
+    <text x="20" y="30" class="label-large" style="fill: #78716C;">A. Traditional Legibility Friction Loop</text>
+    <text x="20" y="48" class="mono-text">Reinforcing pathway locking mechanics (No Architect)</text>
+    <line x1="20" y1="55" x2="300" y2="55" stroke="#E7E5E4" stroke-width="1" />
+
+    <!-- Node 1 -->
+    <rect x="40" y="75" width="240" height="42" rx="4" class="flow-box-neutral" />
+    <text x="50" y="93" class="body-text" font-weight="bold">Informal Grassroots Activity</text>
+    <text x="50" y="106" class="mono-text">Cash-centric, unrecorded, fragmented</text>
+
+    <!-- Arrow 1 to 2 -->
+    <path d="M 160 117 L 160 148" class="flow-arrow" style="stroke: #78716C;" />
+
+    <!-- Node 2 -->
+    <rect x="40" y="150" width="240" height="42" rx="4" class="flow-box-neutral" />
+    <text x="50" y="168" class="body-text" font-weight="bold">Absolute Information Deficit</text>
+    <text x="50" y="181" class="mono-text">Transactions illegible to institutional gatekeepers</text>
+
+    <!-- Arrow 2 to 3 -->
+    <path d="M 160 192 L 160 223" class="flow-arrow" style="stroke: #78716C;" />
+
+    <!-- Node 3 -->
+    <rect x="40" y="225" width="240" height="42" rx="4" class="flow-box-neutral" />
+    <text x="50" y="243" class="body-text" font-weight="bold">Zero Underwriting Capacity</text>
+    <text x="50" y="256" class="mono-text">Banks treat sector as pure untrusted liability</text>
+
+    <!-- Arrow 3 to 4 -->
+    <path d="M 160 267 L 160 298" class="flow-arrow" style="stroke: #78716C;" />
+
+    <!-- Node 4 -->
+    <rect x="40" y="300" width="240" height="42" rx="4" class="flow-box-neutral" style="fill: #FAF8F5;" />
+    <text x="50" y="318" class="body-text" font-weight="bold" fill="#7F1D1D">Institutional Capital Strands</text>
+    <text x="50" y="331" class="mono-text">Funding stays in Eurobonds &amp; short bills</text>
+
+    <!-- Return Arrow 4 to 1 -->
+    <path d="M 280 321 C 310 321 310 96 280 96" class="flow-arrow" style="stroke: #78716C;" />
+  </g>
+
+  <!-- MIDDLE: INTERVENTION POINT -->
+  <g transform="translate(382, 310)">
+    <circle cx="18" cy="18" r="18" fill="#7F1D1D" />
+    <text x="13" y="23" font-family="Inter, sans-serif" font-size="14px" font-weight="bold" fill="#FFFFFF">★</text>
+  </g>
+
+  <!-- RIGHT: THE VIRTUOUS FLYWHEEL (The Active Architect Loop) -->
+  <g transform="translate(430, 150)">
+    <rect width="320" height="380" class="flow-box-red" />
+    <path d="M 0 0 L 320 0" stroke="#7F1D1D" stroke-width="3" />
+    <text x="20" y="30" class="label-large" style="fill: #7F1D1D;">B. Country Architect Virtuous Cycle</text>
+    <text x="20" y="48" class="mono-text" style="fill: #7F1D1D;">Unified Social Account mapping (DPI-driven)</text>
+    <line x1="20" y1="55" x2="300" y2="55" stroke="#FCA5A5" stroke-width="1" />
+
+    <!-- Node 1 -->
+    <rect x="40" y="75" width="240" height="42" rx="4" class="flow-box-neutral" style="stroke: #7F1D1D; border-width: 1.5;" />
+    <text x="50" y="93" class="body-text" font-weight="bold">Fayda ID Account Registry (SPAR)</text>
+    <text x="50" y="106" class="mono-text" style="fill: #7F1D1D;">Creates provider-agnostic transaction endpoints</text>
+
+    <!-- Arrow 1 to 2 -->
+    <path d="M 160 117 L 160 148" class="flow-arrow" />
+    <polygon points="160,148 156,140 164,140" class="head-marker" />
+
+    <!-- Node 2 -->
+    <rect x="40" y="150" width="240" height="42" rx="4" class="flow-box-neutral" />
+    <text x="50" y="168" class="body-text" font-weight="bold">Structured Transaction Ledgers</text>
+    <text x="50" y="181" class="mono-text">Daily cash-flow files shared securely to CRB</text>
+
+    <!-- Arrow 2 to 3 -->
+    <path d="M 160 192 L 160 223" class="flow-arrow" />
+    <polygon points="160,223 156,215 164,215" class="head-marker" />
+
+    <!-- Node 3 -->
+    <rect x="40" y="225" width="240" height="42" rx="4" class="flow-box-neutral" />
+    <text x="50" y="243" class="body-text" font-weight="bold">Standardized ABS Construction</text>
+    <text x="50" y="256" class="mono-text">Bundling cash flows into sellable portfolios</text>
+
+    <!-- Arrow 3 to 4 -->
+    <path d="M 160 267 L 160 298" class="flow-arrow" />
+    <polygon points="160,298 156,290 164,290" class="head-marker" />
+
+    <!-- Node 4 -->
+    <rect x="40" y="300" width="240" height="42" rx="4" class="flow-box-neutral" style="fill: #FEF2F2; stroke: #7F1D1D;" />
+    <text x="50" y="318" class="body-text" font-weight="bold" fill="#7F1D1D">ESX Capital Market Unlocked</text>
+    <text x="50" y="331" class="mono-text" style="fill: #7D2D12;">Liquid facilities flow back into first-mile lending</text>
+
+    <!-- Return Arrow 4 to 1 -->
+    <path d="M 280 321 C 310 321 310 96 280 96" class="flow-arrow" />
+    <polygon points="280,96 286,104 278,104" class="head-marker" />
+  </g>
+
+  <!-- Footnote -->
+  <text x="50" y="565" class="mono-text">Country Architect Diagnostic v2.2 Flywheel Model | JEL Classification: O10, O16, O17 • Prepared by Abeselom Girum Chernet</text>
+</svg>

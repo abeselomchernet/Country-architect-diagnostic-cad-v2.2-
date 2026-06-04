@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FAF8F5; }
+      .border-line { stroke: #E7E5E4; stroke-width: 1.5; fill: none; }
+      .grid-line { stroke: #F5F5F4; stroke-width: 1; }
+      .accent-line { stroke: #7F1D1D; stroke-width: 2; fill: none; }
+      .title { font-family: "Georgia", serif; font-size: 22px; font-weight: bold; fill: #1C1917; }
+      .subtitle { font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; fill: #78716C; letter-spacing: 1.5px; }
+      .label-large { font-family: "Georgia", serif; font-size: 15px; font-weight: bold; fill: #1C1917; }
+      .body-text { font-family: "Inter", sans-serif; font-size: 11px; fill: #44403C; }
+      .mono-text { font-family: "JetBrains Mono", monospace; font-size: 9px; fill: #78716C; }
+      .bridge-structure { stroke: #7F1D1D; stroke-width: 3; fill: #FDF2F2; }
+      .bridge-cable { stroke: #B91C1C; stroke-width: 1; fill: none; }
+      .pillar-box { fill: #FFFFFF; stroke: #D6D3D1; stroke-width: 1; }
+      .sector-title { font-family: "Georgia", serif; font-size: 14px; font-weight: bold; fill: #1C1917; }
+    </style>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" class="bg" />
+  <line x1="100" y1="0" x2="100" y2="600" class="grid-line" />
+  <line x1="200" y1="0" x2="200" y2="600" class="grid-line" />
+  <line x1="300" y1="0" x2="300" y2="600" class="grid-line" />
+  <line x1="400" y1="0" x2="400" y2="600" class="grid-line" />
+  <line x1="500" y1="0" x2="500" y2="600" class="grid-line" />
+  <line x1="600" y1="0" x2="600" y2="600" class="grid-line" />
+  <line x1="700" y1="0" x2="700" y2="600" class="grid-line" />
+  <line x1="0" y1="100" x2="800" y2="100" class="grid-line" />
+  <line x1="0" y1="200" x2="800" y2="200" class="grid-line" />
+  <line x1="0" y1="300" x2="800" y2="300" class="grid-line" />
+  <line x1="0" y1="400" x2="800" y2="400" class="grid-line" />
+  <line x1="0" y1="500" x2="800" y2="500" class="grid-line" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="750" height="550" class="border-line" />
+
+  <!-- Header -->
+  <text x="50" y="65" class="title">The Innovation Bridge &amp; Translation Layer</text>
+  <text x="50" y="85" class="subtitle">DE-TOXIFYING THE ECO-SYSTEM GAP VIA DUAL STRUCTURING TIERS</text>
+  <line x1="50" y1="95" x2="750" y2="95" class="accent-line" />
+
+  <!-- Left: Grassroots Side -->
+  <g transform="translate(50, 140)">
+    <rect width="210" height="380" class="pillar-box" />
+    <path d="M 0 0 L 210 0" stroke="#78716C" stroke-width="3" />
+    <text x="15" y="30" class="sector-title" style="fill: #78716C;">Grassroots System</text>
+    <text x="15" y="45" class="mono-text">INFORMAL, HIGH-FREQUENCY</text>
+    <line x1="15" y1="52" x2="195" y2="52" stroke="#E7E5E4" stroke-width="1" />
+    
+    <g transform="translate(15, 70)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">High-Frequency Cash</text>
+      <text x="10" y="34" class="body-text">Small, fragmented rural volumes</text>
+      <text x="10" y="46" class="mono-text" style="color: #78716C;">Average &lt; $5 ticket size</text>
+    </g>
+
+    <g transform="translate(15, 145)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Physical Delivery</text>
+      <text x="10" y="34" class="body-text">Localized agents and shops</text>
+      <text x="10" y="46" class="mono-text">Low smartphone penetration</text>
+    </g>
+
+    <g transform="translate(15, 220)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Informal Trust</text>
+      <text x="10" y="34" class="body-text">Based on interpersonal credit</text>
+      <text x="10" y="46" class="mono-text">No formal credit record Bureau</text>
+    </g>
+
+    <g transform="translate(15, 295)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Ecosystem Tension</text>
+      <text x="10" y="34" class="body-text">Cash-out drain &amp; float depletions</text>
+      <text x="10" y="46" class="mono-text">Severe regional liquidity lag</text>
+    </g>
+  </g>
+
+  <!-- Right: Institutional Side -->
+  <g transform="translate(540, 140)">
+    <rect width="210" height="380" class="pillar-box" />
+    <path d="M 0 0 L 210 0" stroke="#78716C" stroke-width="3" />
+    <text x="15" y="30" class="sector-title" style="fill: #78716C;">Institutional System</text>
+    <text x="15" y="45" class="mono-text">HIGH-COMPLIANCE, STRUCTURED</text>
+    <line x1="15" y1="52" x2="195" y2="52" stroke="#E7E5E4" stroke-width="1" />
+
+    <g transform="translate(15, 70)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Wholesale Capital</text>
+      <text x="10" y="34" class="body-text">Risk-averse corporate pools</text>
+      <text x="10" y="46" class="mono-text">Pension funds, Treasury bills</text>
+    </g>
+
+    <g transform="translate(15, 145)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Rigid Regulation</text>
+      <text x="10" y="34" class="body-text">Heavy KYC and AML thresholds</text>
+      <text x="10" y="46" class="mono-text">Sovereign compliance directives</text>
+    </g>
+
+    <g transform="translate(15, 220)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Standard Underwriting</text>
+      <text x="10" y="34" class="body-text">Requires formal collateral</text>
+      <text x="10" y="46" class="mono-text">Historical audited balance sheet</text>
+    </g>
+
+    <g transform="translate(15, 295)">
+      <rect width="180" height="55" class="pillar-box" />
+      <text x="10" y="20" class="body-text" font-weight="bold">Global Integration</text>
+      <text x="10" y="34" class="body-text">FX peg dependencies &amp; debt caps</text>
+      <text x="10" y="46" class="mono-text">Exposed to balance sheet shock</text>
+    </g>
+  </g>
+
+  <!-- Middle: Innovation Bridge Built by Country Architect -->
+  <g transform="translate(280, 140)">
+    <!-- Bridge Towers -->
+    <path d="M 0 100 Q 120 40 240 100 L 240 130 Q 120 80 0 130 Z" class="bridge-structure" />
+    <text x="50" y="118" font-family="Georgia, serif" font-size="12px" font-weight="bold" fill="#7F1D1D">Innovation Bridge</text>
+
+    <!-- Cables -->
+    <path d="M 120 40 L 40 108" class="bridge-cable" />
+    <path d="M 120 40 L 80 112" class="bridge-cable" />
+    <path d="M 120 40 L 120 115" class="bridge-cable" />
+    <path d="M 120 40 L 160 112" class="bridge-cable" />
+    <path d="M 120 40 L 200 108" class="bridge-cable" />
+
+    <!-- 4 Pillar Bridging Elements -->
+    <g transform="translate(0, 155)">
+      <rect width="240" height="42" class="pillar-box" style="stroke: #7F1D1D; fill: #FFFDFB;" />
+      <text x="12" y="18" class="body-text" font-weight="bold" fill="#7F1D1D">1. Unified Registry Mapping (SPAR)</text>
+      <text x="12" y="33" class="mono-text">Bridges Fayda IDs directly to mobile purses</text>
+    </g>
+
+    <g transform="translate(0, 210)">
+      <rect width="240" height="42" class="pillar-box" style="stroke: #7F1D1D; fill: #FFFDFB;" />
+      <text x="12" y="18" class="body-text" font-weight="bold" fill="#7F1D1D">2. Dynamic Float Buffers</text>
+      <text x="12" y="33" class="mono-text">Reduces rural cash-out settlement friction</text>
+    </g>
+
+    <g transform="translate(0, 265)">
+      <rect width="240" height="42" class="pillar-box" style="stroke: #7F1D1D; fill: #FFFDFB;" />
+      <text x="12" y="18" class="body-text" font-weight="bold" fill="#7F1D1D">3. Sandbox Sovereign Safe Harbor</text>
+      <text x="12" y="33" class="mono-text">Enables low-risk regulatory sandboxing</text>
+    </g>
+
+    <g transform="translate(0, 320)">
+      <rect width="240" height="42" class="pillar-box" style="stroke: #7F1D1D; fill: #FFFDFB;" />
+      <text x="12" y="18" class="body-text" font-weight="bold" fill="#7F1D1D">4. Credit Reference Feeds (ABS)</text>
+      <text x="12" y="33" class="mono-text">Legibilizes cash flows for portfolio listing</text>
+    </g>
+  </g>
+
+  <!-- Horizontal flow arrow representations -->
+  <!-- Left to Bridge -->
+  <line x1="260" y1="210" x2="280" y2="210" stroke="#7F1D1D" stroke-width="1.5" />
+  <polygon points="280,210 274,206 274,214" fill="#7F1D1D" />
+
+  <!-- Bridge to Right -->
+  <line x1="520" y1="210" x2="540" y2="210" stroke="#7F1D1D" stroke-width="1.5" />
+  <polygon points="540,210 534,206 534,214" fill="#7F1D1D" />
+
+  <!-- Footnote -->
+  <text x="50" y="565" class="mono-text">Country Architect Diagnostic v2.2 Translation Bridge | JEL Classification: O10, O16, O17 • Prepared by Abeselom Girum Chernet</text>
+</svg>

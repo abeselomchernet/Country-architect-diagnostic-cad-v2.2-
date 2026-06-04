@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FAF8F5; }
+      .border-line { stroke: #E7E5E4; stroke-width: 1.5; fill: none; }
+      .grid-line { stroke: #F5F5F4; stroke-width: 1; }
+      .accent-line { stroke: #7F1D1D; stroke-width: 2; fill: none; }
+      .title { font-family: "Georgia", serif; font-size: 22px; font-weight: bold; fill: #1C1917; }
+      .subtitle { font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; fill: #78716C; letter-spacing: 1.5px; }
+      .label-large { font-family: "Georgia", serif; font-size: 15px; font-weight: bold; fill: #1C1917; }
+      .body-text { font-family: "Inter", sans-serif; font-size: 11px; fill: #44403C; }
+      .mono-text { font-family: "JetBrains Mono", monospace; font-size: 9px; fill: #78716C; }
+      .step-box-active { fill: #FFFFFF; stroke: #7F1D1D; stroke-width: 1.5; }
+      .step-box-neutral { fill: #FFFFFF; stroke: #D6D3D1; stroke-width: 1; }
+      .arrow-connector { stroke: #7F1D1D; stroke-width: 1.5; fill: none; }
+      .step-badge { font-family: "JetBrains Mono", monospace; font-size: 9px; font-weight: bold; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" class="bg" />
+  <line x1="100" y1="0" x2="100" y2="600" class="grid-line" />
+  <line x1="200" y1="0" x2="200" y2="600" class="grid-line" />
+  <line x1="300" y1="0" x2="300" y2="600" class="grid-line" />
+  <line x1="400" y1="0" x2="400" y2="600" class="grid-line" />
+  <line x1="500" y1="0" x2="500" y2="600" class="grid-line" />
+  <line x1="600" y1="0" x2="600" y2="600" class="grid-line" />
+  <line x1="700" y1="0" x2="700" y2="600" class="grid-line" />
+  <line x1="0" y1="100" x2="800" y2="100" class="grid-line" />
+  <line x1="0" y1="200" x2="800" y2="200" class="grid-line" />
+  <line x1="0" y1="300" x2="800" y2="300" class="grid-line" />
+  <line x1="0" y1="400" x2="800" y2="400" class="grid-line" />
+  <line x1="0" y1="500" x2="800" y2="500" class="grid-line" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="750" height="550" class="border-line" />
+
+  <!-- Header -->
+  <text x="50" y="65" class="title">Country Architect Operating Model &amp; Stages</text>
+  <text x="50" y="85" class="subtitle">FOUR PIPELINE PHASES FOR DEPLOYING TRANSLATION SECTORS</text>
+  <line x1="50" y1="95" x2="750" y2="95" class="accent-line" />
+
+  <!-- Phase 1 -->
+  <g transform="translate(50, 115)">
+    <rect width="700" height="95" class="step-box-neutral" />
+    <path d="M 0 0 L 0 95" stroke="#78716C" stroke-width="4" />
+    
+    <!-- Step Badge -->
+    <rect x="20" y="20" width="60" height="18" rx="2" fill="#78716C" />
+    <text x="28" y="32" class="step-badge">STAGE 1</text>
+    
+    <text x="95" y="33" class="label-large">Sovereign Ecosystem Audit &amp; Base Diagnostic</text>
+    <text x="95" y="52" class="body-text">Run complete CAD v2.2 diagnostic benchmarks over 4 structural pillars (GSV/ITC/Dynamics/AFL).</text>
+    <text x="95" y="68" class="body-text" font-weight="bold">Outcome Deliverable: <tspan font-weight="normal" class="mono-text">Standard country blueprint audit registry file with initial core ARI metrics.</tspan></text>
+  </g>
+
+  <!-- Arrow Phase 1 to 2 -->
+  <path d="M 400 210 L 400 225" class="arrow-connector" />
+  <polygon points="400,225 396,218 404,218" fill="#7F1D1D" />
+
+  <!-- Phase 2 -->
+  <g transform="translate(50, 225)">
+    <rect width="700" height="95" class="step-box-neutral" />
+    <path d="M 0 0 L 0 95" stroke="#78716C" stroke-width="4" />
+    
+    <!-- Step Badge -->
+    <rect x="20" y="20" width="60" height="18" rx="2" fill="#78716C" />
+    <text x="28" y="32" class="step-badge">STAGE 2</text>
+    
+    <text x="95" y="33" class="label-large">Integration Protocols &amp; Translation Layer Design</text>
+    <text x="95" y="52" class="body-text">Detail the specific bridging components: Fayda mappings, OpenG2P API hooks, credit metrics rules.</text>
+    <text x="95" y="68" class="body-text" font-weight="bold">Outcome Deliverable: <tspan font-weight="normal" class="mono-text">Technical specification docs for Social Payments Accounts Registry (SPAR).</tspan></text>
+  </g>
+
+  <!-- Arrow Phase 2 to 3 -->
+  <path d="M 400 320 L 400 335" class="arrow-connector" />
+  <polygon points="400,335 396,328 404,328" fill="#7F1D1D" />
+
+  <!-- Phase 3 -->
+  <g transform="translate(50, 335)">
+    <rect width="700" height="95" class="step-box-active" />
+    <path d="M 0 0 L 0 95" stroke="#7F1D1D" stroke-width="4" />
+    
+    <!-- Step Badge -->
+    <rect x="20" y="20" width="60" height="18" rx="2" fill="#7F1D1D" />
+    <text x="28" y="32" class="step-badge">STAGE 3</text>
+    
+    <text x="95" y="33" class="label-large" style="fill: #7F1D1D;">First-Mile Pilot &amp; Trust Safelands</text>
+    <text x="95" y="52" class="body-text">Launch a low-risk sandboxed mapping endpoint. Establish agent cash liquidity reserves and float limits.</text>
+    <text x="95" y="68" class="body-text" font-weight="bold">Outcome Deliverable: <tspan font-weight="normal" class="mono-text">Working live pilot of 100k G2P PSNP rural transfers with decoupled currency lock.</tspan></text>
+  </g>
+
+  <!-- Arrow Phase 3 to 4 -->
+  <path d="M 400 430 L 400 445" class="arrow-connector" />
+  <polygon points="400,445 396,438 404,438" fill="#7F1D1D" />
+
+  <!-- Phase 4 -->
+  <g transform="translate(50, 445)">
+    <rect width="700" height="95" class="step-box-neutral" />
+    <path d="M 0 0 L 0 95" stroke="#78716C" stroke-width="4" />
+    
+    <!-- Step Badge -->
+    <rect x="20" y="20" width="60" height="18" rx="2" fill="#78716C" />
+    <text x="28" y="32" class="step-badge">STAGE 4</text>
+    
+    <text x="95" y="33" class="label-large">Institutional Securitization &amp; ESX Capital Listing</text>
+    <text x="95" y="52" class="body-text">Construct standard asset-backed portfolios (ABS). List high-security tranches directly on ESX board listings.</text>
+    <text x="95" y="68" class="body-text" font-weight="bold">Outcome Deliverable: <tspan font-weight="normal" class="mono-text">Broadly marketed capital portfolio backed by recurring cash flow ledgers.</tspan></text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="50" y="565" class="mono-text">Country Architect Diagnostic v2.2 Operating Cycle | JEL Classification: O10, O16, O17 • Prepared by Abeselom Girum Chernet</text>
+</svg>

@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Country Architect Diagnostic (CAD) v2.2 Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1121;
+      --card: #131c35;
+      --muted: #8fa5cc;
+      --text: #f0f4ff;
+      --line: #26365f;
+      --accent: #5e92ff;
+      --accent-success: #3dd892;
+      --accent-warning: #ffb84d;
+      --accent-danger: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top right, #0d1e3d, #090e1a);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    header {
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #fff;
+    }
+    p.sub {
+      margin: 0;
+      font-size: 16px;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    }
+    .card h2 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      color: #fff;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    .card p.desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin: -10px 0 16px 0;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      gap: 15px;
+      align-items: center;
+      margin: 12px 0;
+    }
+    label {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #090e1b;
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+    }
+    input[type="range"] {
+      grid-column: span 2;
+      width: 100%;
+      accent-color: var(--accent);
+      margin-top: -4px;
+    }
+    .result-section {
+      margin-top: 30px;
+      background: rgba(19, 28, 53, 0.7);
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .result-metric {
+      background: #090e1b;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .result-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .result-val {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .badge-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 99px;
+      background: #0a1020;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .pill span {
+      color: var(--muted);
+      margin-right: 6px;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    button:hover {
+      box-shadow: 0 0 12px rgba(94, 146, 255, 0.4);
+      transform: translateY(-1px);
+    }
+    button.secondary {
+      background: #1e2d4e;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    button.secondary:hover {
+      background: #253963;
+      box-shadow: none;
+    }
+    pre {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      background: #090e1b;
+      border: 1px solid var(--line);
+      padding: 15px;
+      border-radius: 12px;
+      font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 13px;
+      color: #add8e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Country Architect Diagnostic (CAD) v2.2</h1>
+      <p class="sub">Universal Assessment and Priority Sequencing Framework (SSRN Working Paper)</p>
+    </header>
+
+    <div class="grid">
+      <!-- Pillar I -->
+      <div class="card">
+        <h2>Pillar I — Grassroots Viability (GSV)</h2>
+        <p class="desc">Measures de facto last-mile system functionality and transaction sustainability.</p>
+        
+        <div class="row">
+          <label for="demand">Demand Reality (5.1)</label>
+          <input id="demand" type="number" min="0" max="10" step="0.1" value="7.5" oninput="syncRange(this, 'demand-rng')">
+        </div>
+        <input id="demand-rng" type="range" min="0" max="10" step="0.1" value="7.5" oninput="syncNum(this, 'demand')">
+
+        <div class="row">
+          <label for="delivery">Delivery Infrastructure (5.2)</label>
+          <input id="delivery" type="number" min="0" max="10" step="0.1" value="6.0" oninput="syncRange(this, 'delivery-rng')">
+        </div>
+        <input id="delivery-rng" type="range" min="0" max="10" step="0.1" value="6.0" oninput="syncNum(this, 'delivery')">
+
+        <div class="row">
+          <label for="trust">Trust Architecture (5.3)</label>
+          <input id="trust" type="number" min="0" max="10" step="0.1" value="4.0" oninput="syncRange(this, 'trust-rng')">
+        </div>
+        <input id="trust-rng" type="range" min="0" max="10" step="0.1" value="4.0" oninput="syncNum(this, 'trust')">
+
+        <div class="row">
+          <label for="unit">Unit Economics (5.4)</label>
+          <input id="unit" type="number" min="0" max="10" step="0.1" value="4.5" oninput="syncRange(this, 'unit-rng')">
+        </div>
+        <input id="unit-rng" type="range" min="0" max="10" step="0.1" value="4.5" oninput="syncNum(this, 'unit')">
+      </div>
+
+      <!-- Pillar II -->
+      <div class="card">
+        <h2>Pillar II — Translation Capacity (ITC)</h2>
+        <p class="desc">Measures capacity to recognize, structure, and scale grassroots activity.</p>
+        
+        <div class="row">
+          <label for="capital">Capital Presence (6.1)</label>
+          <input id="capital" type="number" min="0" max="10" step="0.1" value="7.0" oninput="syncRange(this, 'capital-rng')">
+        </div>
+        <input id="capital-rng" type="range" min="0" max="10" step="0.1" value="7.0" oninput="syncNum(this, 'capital')">
+
+        <div class="row">
+          <label for="data">Data Legibility (6.2)</label>
+          <input id="data" type="number" min="0" max="10" step="0.1" value="3.5" oninput="syncRange(this, 'data-rng')">
+        </div>
+        <input id="data-rng" type="range" min="0" max="10" step="0.1" value="3.5" oninput="syncNum(this, 'data')">
+
+        <div class="row">
+          <label for="structuring">Structuring Capacity (6.3)</label>
+          <input id="structuring" type="number" min="0" max="10" step="0.1" value="3.5" oninput="syncRange(this, 'structuring-rng')">
+        </div>
+        <input id="structuring-rng" type="range" min="0" max="10" step="0.1" value="3.5" oninput="syncNum(this, 'structuring')">
+
+        <div class="row">
+          <label for="regulatory">Regulatory Translation (6.4)</label>
+          <input id="regulatory" type="number" min="0" max="10" step="0.1" value="6.5" oninput="syncRange(this, 'regulatory-rng')">
+        </div>
+        <input id="regulatory-rng" type="range" min="0" max="10" step="0.1" value="6.5" oninput="syncNum(this, 'regulatory')">
+      </div>
+
+      <!-- Pillar IV & System Metrics -->
+      <div class="card">
+        <h2>Pillar IV — Deployer Level (AFL)</h2>
+        <p class="desc">Assessment of feasibility and access of the deploying institution in the field.</p>
+        
+        <div class="row">
+          <label for="capAdeq">Capital Adequacy</label>
+          <input id="capAdeq" type="number" min="0" max="10" step="0.1" value="7.5" oninput="syncRange(this, 'capAdeq-rng')">
+        </div>
+        <input id="capAdeq-rng" type="range" min="0" max="10" step="0.1" value="7.5" oninput="syncNum(this, 'capAdeq')">
+
+        <div class="row">
+          <label for="political">Political Access</label>
+          <input id="political" type="number" min="0" max="10" step="0.1" value="6.5" oninput="syncRange(this, 'political-rng')">
+        </div>
+        <input id="political-rng" type="range" min="0" max="10" step="0.1" value="6.5" oninput="syncNum(this, 'political')">
+
+        <div class="row">
+          <label for="execution">Execution Density</label>
+          <input id="execution" type="number" min="0" max="10" step="0.1" value="5.5" oninput="syncRange(this, 'execution-rng')">
+        </div>
+        <input id="execution-rng" type="range" min="0" max="10" step="0.1" value="5.5" oninput="syncNum(this, 'execution')">
+
+        <div class="row">
+          <label for="dataCap">Data Capability</label>
+          <input id="dataCap" type="number" min="0" max="10" step="0.1" value="6.0" oninput="syncRange(this, 'dataCap-rng')">
+        </div>
+        <input id="dataCap-rng" type="range" min="0" max="10" step="0.1" value="6.0" oninput="syncNum(this, 'dataCap')">
+
+        <div class="row">
+          <label for="trustAcq">Trust Acquisition</label>
+          <input id="trustAcq" type="number" min="0" max="10" step="0.1" value="5.5" oninput="syncRange(this, 'trustAcq-rng')">
+        </div>
+        <input id="trustAcq-rng" type="range" min="0" max="10" step="0.1" value="5.5" oninput="syncNum(this, 'trustAcq')">
+      </div>
+
+      <!-- Pillar III Inputs -->
+      <div class="card">
+        <h2>Pillar III — System Dynamics Inputs</h2>
+        <p class="desc">Longitudinal measurements, friction floors, and systemic failure projections.</p>
+        
+        <div class="row">
+          <label for="priorGsv">Prior GSV Baseline</label>
+          <input id="priorGsv" type="number" min="0" max="10" step="0.1" value="4.55">
+        </div>
+        <div class="row">
+          <label for="priorItc">Prior ITC Baseline</label>
+          <input id="priorItc" type="number" min="0" max="10" step="0.1" value="4.45">
+        </div>
+        <div class="row">
+          <label for="fts">Friction Transition (FTS Floor)</label>
+          <input id="fts" type="number" min="0" max="10" step="0.1" value="3.5">
+        </div>
+        <div class="row">
+          <label for="sfp">System Failure Probability SFP (%)</label>
+          <input id="sfp" type="number" min="0" max="100" step="1" value="35">
+        </div>
+        <div class="row">
+          <label for="years">Longitudinal Delta (years)</label>
+          <input id="years" type="number" min="0.1" max="10" step="0.01" value="1.75">
+        </div>
+      </div>
+    </div>
+
+    <!-- Results section -->
+    <div class="card result-section">
+      <h2>Diagnostic Outputs</h2>
+      <div class="results-grid">
+        <div class="result-metric">
+          <div class="result-label">Grassroots Viability (GSV)</div>
+          <div id="outGsv" class="result-val">5.50</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-label">Transition Capacity (ITC)</div>
+          <div id="outItc" class="result-val">5.13</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-label">System Dynamics</div>
+          <div id="outDyn" class="result-val">6.10</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-label">Architect Feasibility (AFL)</div>
+          <div id="outAfl" class="result-val">6.20</div>
+        </div>
+        <div class="result-metric" style="border: 2px solid var(--accent);">
+          <div class="result-label" style="color: #fff; font-weight: 700;">Readiness Index (ARI)</div>
+          <div id="outAri" class="result-val" style="color: #6da2ff;">5.56</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-label">Lock Intensity (LIC)</div>
+          <div id="outLic" class="result-val">2.19</div>
+        </div>
+      </div>
+
+      <div class="badge-pills">
+        <div class="pill"><span>Band Classification:</span> <strong id="band" style="color: var(--accent-success);">Transitional Market</strong></div>
+        <div class="pill"><span>Lock Severity:</span> <strong id="coupling" style="color: var(--accent-success);">Weak Coupling</strong></div>
+        <div class="pill"><span>Bottom-Up Dependency (BUD):</span> <strong id="budVal">4.50</strong></div>
+        <div class="pill"><span>Top-Down Dependency (TDD):</span> <strong id="tddVal">4.87</strong></div>
+        <div class="pill"><span>Primary Binding Constraint:</span> <strong id="bindingVal" style="color: var(--accent-warning);">Top-Down (ITC)</strong></div>
+        <div class="pill"><span>SFP Risk Band:</span> <strong id="sfpBand" style="color: var(--accent-warning);">Fragile</strong></div>
+      </div>
+
+      <div class="actions">
+        <button onclick="calculateAll()">Re-Calculate</button>
+        <button class="secondary" onclick="loadEthiopia()">Reset to Ethiopia Baseline</button>
+        <button class="secondary" onclick="loadIdeal()">Load Mature System Target</button>
+      </div>
+
+      <h3 style="margin: 25px 0 10px 0; font-size: 15px; color: var(--muted); text-transform: uppercase;">Mathematical Derivation Trace</h3>
+      <pre id="mathTrace">Initiating trace...</pre>
+    </div>
+  </div>
+
+  <script>
+    function syncRange(numInput, rngId) {
+      document.getElementById(rngId).value = numInput.value;
+      calculateAll();
+    }
+    
+    function syncNum(rngInput, numId) {
+      document.getElementById(numId).value = rngInput.value;
+      calculateAll();
+    }
+
+    function val(id) {
+      return parseFloat(document.getElementById(id).value || 0);
+    }
+    
+    function clamp(n, min, max) {
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function calculateAll() {
+      const gsv = (val('demand') + val('delivery') + val('trust') + val('unit')) / 4;
+      const itc = (val('capital') + val('data') + val('structuring') + val('regulatory')) / 4;
+      
+      const priorGsv = val('priorGsv');
+      const priorItc = val('priorItc');
+      const fts = val('fts');
+      const sfp = val('sfp');
+      const years = Math.max(0.1, val('years'));
+
+      // LIC
+      const lic = ((10 - gsv) * (10 - itc)) / 10;
+      
+      // BUD and TDD
+      const bud = 10 - gsv;
+      const tdd = 10 - itc;
+
+      // Dynamics MS
+      const currentComposite = (gsv + itc) / 2;
+      const priorComposite = (priorGsv + priorItc) / 2;
+      const ms = (currentComposite - priorComposite) / years;
+      const msn = clamp(5 + ms, 0, 10);
+
+      // Dynamics score
+      const sfpi = (100 - sfp) / 10;
+      const dyn = ((10 - lic) * 0.35) + (msn * 0.25) + (fts * 0.20) + (sfpi * 0.20);
+
+      // AFL
+      const afl = (val('capAdeq') + val('political') + val('execution') + val('dataCap') + val('trustAcq')) / 5;
+
+      // ARI
+      const ari = (gsv * 0.35) + (itc * 0.35) + (dyn * 0.20) + (afl * 0.10);
+
+      // DOM Updates
+      document.getElementById('outGsv').textContent = gsv.toFixed(2);
+      document.getElementById('outItc').textContent = itc.toFixed(2);
+      document.getElementById('outDyn').textContent = dyn.toFixed(2);
+      document.getElementById('outAfl').textContent = afl.toFixed(2);
+      document.getElementById('outAri').textContent = ari.toFixed(2);
+      document.getElementById('outLic').textContent = lic.toFixed(2);
+
+      // Band classification
+      let bandText = '';
+      let bandColor = '';
+      if (ari < 3.0) {
+        bandText = 'Pre-Emergent';
+        bandColor = 'var(--accent-danger)';
+      } else if (ari < 5.0) {
+        bandText = 'Structural Implementation Gap (SIG)';
+        bandColor = 'var(--accent-danger)';
+      } else if (ari < 7.0) {
+        bandText = 'Transitional Market';
+        bandColor = 'var(--accent-warning)';
+      } else {
+        bandText = 'Mature Ecosystem';
+        bandColor = 'var(--accent-success)';
+      }
+      document.getElementById('band').textContent = bandText;
+      document.getElementById('band').style.color = bandColor;
+
+      // Coupling
+      let couplingText = '';
+      let couplingColor = '';
+      if (lic < 3.0) {
+        couplingText = 'Weak Coupling';
+        couplingColor = 'var(--accent-success)';
+      } else if (lic < 6.0) {
+        couplingText = 'Moderate Coupling';
+        couplingColor = 'var(--accent-warning)';
+      } else {
+        couplingText = 'High Coupling (Lock State)';
+        couplingColor = 'var(--accent-danger)';
+      }
+      document.getElementById('coupling').textContent = couplingText;
+      document.getElementById('coupling').style.color = couplingColor;
+
+      document.getElementById('budVal').textContent = bud.toFixed(2);
+      document.getElementById('tddVal').textContent = tdd.toFixed(2);
+
+      // Primary constraint
+      const constraintText = tdd > bud ? 'Top-Down (ITC)' : (bud > tdd ? 'Bottom-Up (GSV)' : 'Balanced Symmetrical Constraint');
+      document.getElementById('bindingVal').textContent = constraintText;
+
+      // SFP Band
+      let sfpText = '';
+      let sfpColor = '';
+      if (sfp < 20) {
+        sfpText = 'Stable';
+        sfpColor = 'var(--accent-success)';
+      } else if (sfp < 40) {
+        sfpText = 'Fragile';
+        sfpColor = 'var(--accent-warning)';
+      } else if (sfp < 60) {
+        sfpText = 'High Risk';
+        sfpColor = 'var(--accent-danger)';
+      } else {
+        sfpText = 'Systemically Unstable';
+        sfpColor = 'var(--accent-danger)';
+      }
+      document.getElementById('sfpBand').textContent = sfpText;
+      document.getElementById('sfpBand').style.color = sfpColor;
+
+      // Trace logs
+      document.getElementById('mathTrace').textContent = 
+        `Pillar I GSV = (${val('demand')} + ${val('delivery')} + ${val('trust')} + ${val('unit')}) / 4 = ${gsv.toFixed(4)}\n` +
+        `Pillar II ITC = (${val('capital')} + ${val('data')} + ${val('structuring')} + ${val('regulatory')}) / 4 = ${itc.toFixed(4)}\n` +
+        `Lock Intensity LIC = [(10 - ${gsv.toFixed(2)}) * (10 - ${itc.toFixed(2)})] / 10 = ${lic.toFixed(4)}\n` +
+        `Bottom-Up Dependency (BUD) = 10 - GSV = ${bud.toFixed(2)}, Top-Down Dependency (TDD) = 10 - ITC = ${tdd.toFixed(2)}\n` +
+        `Momentum Score MS = [(${currentComposite.toFixed(3)} - ${priorComposite.toFixed(3)}) / ${years}] = ${ms.toFixed(4)} -> Normalized MS_n = ${msn.toFixed(4)}\n` +
+        `Inverse SFP Factor SFPi = (100 - ${sfp}) / 10 = ${sfpi.toFixed(2)}\n` +
+        `Pillar III Dynamics = (${(10 - lic).toFixed(2)} * 0.35) + (${msn.toFixed(3)} * 0.25) + (${fts.toFixed(2)} * 0.20) + (${sfpi.toFixed(2)} * 0.20) = ${dyn.toFixed(4)}\n` +
+        `Pillar IV AFL = (${val('capAdeq')} + ${val('political')} + ${val('execution')} + ${val('dataCap')} + ${val('trustAcq')}) / 5 = ${afl.toFixed(4)}\n` +
+        `ARI Master Composite = (GSV * 0.35) + (ITC * 0.35) + (Dynamics * 0.20) + (AFL * 0.10) \n` +
+        `                     = (${gsv.toFixed(3)} * 0.35) + (${itc.toFixed(3)} * 0.35) + (${dyn.toFixed(3)} * 0.20) + (${afl.toFixed(3)} * 0.10) \n` +
+        `                     = ${(gsv*0.35).toFixed(4)} + ${(itc*0.35).toFixed(4)} + ${(dyn*0.20).toFixed(4)} + ${(afl*0.10).toFixed(4)} \n` +
+        `                     = ${ari.toFixed(4)}`;
+    }
+
+    function loadEthiopia() {
+      const ethiopia = {
+        demand: 7.5, delivery: 6.0, trust: 4.0, unit: 4.5,
+        capital: 7.0, data: 3.5, structuring: 3.5, regulatory: 6.5,
+        capAdeq: 7.5, political: 6.5, execution: 5.5, dataCap: 6.0, trustAcq: 6.5,
+        priorGsv: 4.55, priorItc: 4.45, fts: 3.5, sfp: 35, years: 1.75
+      };
+      
+      for (let k in ethiopia) {
+        const inp = document.getElementById(k);
+        if (inp) {
+          inp.value = ethiopia[k];
+          const rngInput = document.getElementById(k + '-rng');
+          if (rngInput) rngInput.value = ethiopia[k];
+        }
+      }
+      calculateAll();
+    }
+
+    function loadIdeal() {
+      const ideal = {
+        demand: 8.5, delivery: 8.0, trust: 7.5, unit: 7.0,
+        capital: 8.5, data: 7.5, structuring: 7.0, regulatory: 8.0,
+        capAdeq: 8.5, political: 8.0, execution: 8.0, dataCap: 8.0, trustAcq: 8.0,
+        priorGsv: 5.50, priorItc: 5.13, fts: 6.5, sfp: 18, years: 1.5
+      };
+      
+      for (let k in ideal) {
+        const inp = document.getElementById(k);
+        if (inp) {
+          inp.value = ideal[k];
+          const rngInput = document.getElementById(k + '-rng');
+          if (rngInput) rngInput.value = ideal[k];
+        }
+      }
+      calculateAll();
+    }
+
+    // Initialize
+    calculateAll();
+  </script>
+</body>
+</html>

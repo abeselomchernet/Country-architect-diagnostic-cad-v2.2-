@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this scientific framework or software platform in your research, policy design, or economic assessments, please cite it as below."
+authors:
+  - family-names: "Chernet"
+    given-names: "Abeselom Girum"
+    email: "abeselomgirum@gmail.com"
+    affiliation: "Independent Systems Architect Advisor"
+title: "Country Architect Diagnostic (CAD) v2.2: Universal Architecture for Market Formation"
+version: "2.2.0"
+doi: "10.2139/ssrn.temp"
+date-released: "2026-06-04"
+url: "https://github.com/berhaneunity/Country-Architect-Diagnostic"
+keywords:
+  - "market-formation"
+  - "development-finance"
+  - "digital-public-infrastructure"
+  - "emerging-markets"
+  - "economic-development"
+  - "systems-thinking"
+  - "policy-design"
+  - "fintech"
+  - "country-architect"
+preferred-citation:
+  type: report
+  authors:
+    - family-names: "Chernet"
+      given-names: "Abeselom Girum"
+      email: "abeselomgirum@gmail.com"
+      affiliation: "Independent Systems Architect Advisor"
+  title: "Country Architect Diagnostic (CAD) v2.2: Universal Architecture for Market Formation"
+  institution: "SSRN Working Paper Series"
+  year: 2025
+  month: 5
+  type: "Working Paper"
+  jel-codes:
+    - "O10"
+    - "O16"
+    - "O17"
