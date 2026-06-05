@@ -777,6 +777,38 @@ export default function AiStudioDashboard() {
                   <p className="text-stone-400 text-xs leading-relaxed">
                     Overview of synthesized macroeconomic capacity indicators and structural constraints calculated across grassroots, institutional, and administrative vectors for {getCountryFullName(validationCountry)}.
                   </p>
+
+                  <div className="flex gap-2">
+                    <input type="text" placeholder="Assessment Name" id="assessment-name" className="bg-stone-800 text-white text-xs px-2 py-1 rounded" />
+                    <button 
+                      onClick={async () => {
+                        const name = (document.getElementById('assessment-name') as HTMLInputElement).value;
+                        if (!name) return;
+                        await fetch('/api/assessments', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ id: name, data: currentInput })
+                        });
+                        alert('Assessment Saved');
+                      }}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1 rounded"
+                    >
+                      Save
+                    </button>
+                    <button 
+                      onClick={async () => {
+                        const name = (document.getElementById('assessment-name') as HTMLInputElement).value;
+                        if (!name) return;
+                        const res = await fetch(`/api/assessments/${name}`);
+                        const data = await res.json();
+                        handleLoadAssessmentToWorkspace(data);
+                        alert('Assessment Loaded');
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded"
+                    >
+                      Load
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 pt-6 border-t border-stone-800">
