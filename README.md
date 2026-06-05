@@ -1,5 +1,8 @@
 # Country Architect Diagnostic (CAD) v2.2
 
+**[Access the Sovereign Platform (Live App)](https://ais-pre-s3tyn5q2csczd5lajyndr2-12971112741.europe-west1.run.app)**  
+**Repository Contact:** [abeselomgirum@gmail.com](mailto:abeselomgirum@gmail.com)
+
 A Universal Framework for Diagnosing Implementation Gaps, Institutional Translation Capacity, and Market Formation Readiness in Emerging Economies.
 
 ## Overview

@@ -26,15 +26,24 @@ import {
   ChevronRight,
   ChevronLeft,
   Clock,
-  Compass
+  Compass,
+  Command,
+  Lock,
+  Network,
+  FormInput
 } from "lucide-react";
 
 import { CADEngine, CADInput, CADResult } from "../core/cadEngine";
 import { CAD_PRESETS } from "../core/preset_loader";
+import { ResearchModeForm } from "../components/ResearchModeForm";
 import { PolicyShocks, PolicyShock } from "../core/policy_shock_engine";
 import { SampleCountries, MultiCountryEngine, CountryScenario, CountryMetadataDB } from "../core/multi_country_engine";
 import { SSRNExporter } from "../export/ssrnExporter";
 import { PDFReportGenerator } from "../export/pdfReportGenerator";
+import { DataFlywheelFlowchart } from "../components/DataFlywheelFlowchart";
+import { ExternalDataIngestionHub } from "../components/SovereignDataFetchers";
+import { ValidationTab, CalibrationTab } from "../components/RefinementEngine";
+import { BenchmarkEngineTab, KnowledgeGraphTab } from "../components/DiagnosticExpansion";
 
 // Econometric Backtesting Imports
 import { WorldBankTimeSeries } from "../core/econometrics/worldBank_timeseries";
@@ -76,80 +85,89 @@ export default function AiStudioDashboard() {
 
   // Navigation active tab
   const [activeTab, setActiveTab] = useState<
-    | "command_center"
-    | "collection_hub"
-    | "evidence_vault"
-    | "data_flywheel"
-    | "cad_assessment"
-    | "bottleneck_analysis"
+    | "research_inputs"
+    | "world_bank"
+    | "imf"
+    | "cgap"
+    | "validation"
+    | "calibration"
+    | "cad_core"
+    | "diagnostics"
     | "policy_lab"
-    | "transition_simulator"
     | "risk_studio"
     | "econometric_lab"
     | "causal_inference"
     | "structural_identification"
     | "cross_country"
-    | "research_integrity"
+    | "intelligence_repository"
+    | "benchmark_engine"
+    | "knowledge_graph"
+    | "pre_registration"
     | "publication_factory"
-    | "institutional_memory"
-  >("command_center");
+  >("research_inputs");
 
-  // Dynamic Array mapping out the 16 CAOS levels for rendering
+  const getCountryFullName = (code: string) => {
+    const map: Record<string, string> = {
+      ETH: "Ethiopia", KEN: "Kenya", NGA: "Nigeria", GHA: "Ghana",
+      RWA: "Rwanda", TZA: "Tanzania", UGA: "Uganda", BGD: "Bangladesh", PAK: "Pakistan"
+    };
+    return map[code] || code;
+  };
+
+  // Dynamic Array mapping out the 19-level Sovereign OS architecture
   const sidebarGroups = useMemo(() => [
     {
-      title: "Executive",
+      title: "Input Layer",
       items: [
-        { id: "command_center", name: "1. Command Center", icon: <BarChart4 size={13} className={activeTab === "command_center" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
+        { id: "research_inputs", name: "1. Research Inputs", icon: <Calculator size={13} className={activeTab === "research_inputs" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
+        { id: "world_bank", name: "2. World Bank", icon: <Database size={13} className={activeTab === "world_bank" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "imf", name: "3. IMF", icon: <Database size={13} className={activeTab === "imf" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "cgap", name: "4. CGAP", icon: <Database size={13} className={activeTab === "cgap" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
-      title: "Feedback Flywheel",
+      title: "Refinement & Calibration",
       items: [
-        { id: "collection_hub", name: "2. Collection Hub", icon: <Database size={13} className={activeTab === "collection_hub" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
-        { id: "evidence_vault", name: "3. Evidence Vault", icon: <FileText size={13} className={activeTab === "evidence_vault" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "data_flywheel", name: "4. Data Flywheel", icon: <RefreshCw size={13} className={activeTab === "data_flywheel" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
+        { id: "validation", name: "5. Validation", icon: <Check size={13} className={activeTab === "validation" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "calibration", name: "6. Calibration", icon: <RefreshCw size={13} className={activeTab === "calibration" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
-      title: "Core Diagnostics",
+      title: "Diagnostic Engine",
       items: [
-        { id: "cad_assessment", name: "5. CAD Assessment & Inputs", icon: <Calculator size={13} className={activeTab === "cad_assessment" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
-        { id: "bottleneck_analysis", name: "6. Bottleneck & Gaps", icon: <AlertTriangle size={13} className={activeTab === "bottleneck_analysis" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "cad_core", name: "7. CAD Core", icon: <Command size={13} className={activeTab === "cad_core" ? "text-amber-400 font-bold" : "text-stone-500"} /> },
+        { id: "diagnostics", name: "8. Diagnostics", icon: <AlertTriangle size={13} className={activeTab === "diagnostics" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
-      title: "Policy Studio",
+      title: "Policy Simulation",
       items: [
-        { id: "policy_lab", name: "7. Policy Design Lab", icon: <Sparkles size={13} className={activeTab === "policy_lab" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "transition_simulator", name: "8. Transition Curves", icon: <TrendingUp size={13} className={activeTab === "transition_simulator" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "risk_studio", name: "9. Uncertainty Studio", icon: <Activity size={13} className={activeTab === "risk_studio" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "policy_lab", name: "9. Policy Shock Lab", icon: <Sparkles size={13} className={activeTab === "policy_lab" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "risk_studio", name: "10. Monte Carlo", icon: <Activity size={13} className={activeTab === "risk_studio" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
       title: "Causal Validation",
       items: [
-        { id: "econometric_lab", name: "10. Econometric Lab", icon: <Layers size={13} className={activeTab === "econometric_lab" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "causal_inference", name: "11. Causal Inference", icon: <Activity size={13} className={activeTab === "causal_inference" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "structural_identification", name: "12. Structural ID Guard", icon: <Shield size={13} className={activeTab === "structural_identification" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "econometric_lab", name: "11. Econometric Validation", icon: <Layers size={13} className={activeTab === "econometric_lab" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "causal_inference", name: "12. Causal Inference", icon: <Activity size={13} className={activeTab === "causal_inference" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "structural_identification", name: "13. Structural ID", icon: <Shield size={13} className={activeTab === "structural_identification" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
-      title: "Comparative Network",
+      title: "Global Intelligence",
       items: [
-        { id: "cross_country", name: "13. Cross-Country Lab", icon: <Globe size={13} className={activeTab === "cross_country" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "cross_country", name: "14. Cross-Country Engine", icon: <Globe size={13} className={activeTab === "cross_country" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "intelligence_repository", name: "15. Intelligence Repository", icon: <FileText size={13} className={activeTab === "intelligence_repository" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "benchmark_engine", name: "16. Benchmark Engine", icon: <BarChart4 size={13} className={activeTab === "benchmark_engine" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "knowledge_graph", name: "17. Knowledge Graph", icon: <Network size={13} className={activeTab === "knowledge_graph" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     },
     {
-      title: "Governance",
+      title: "Governance & Output",
       items: [
-        { id: "research_integrity", name: "14. Research Integrity", icon: <Shield size={13} className={activeTab === "research_integrity" ? "text-amber-400" : "text-stone-500"} /> },
-      ]
-    },
-    {
-      title: "Sovereign Publication",
-      items: [
-        { id: "publication_factory", name: "15. Publication Factory", icon: <Download size={13} className={activeTab === "publication_factory" ? "text-amber-400" : "text-stone-500"} /> },
-        { id: "institutional_memory", name: "16. Inst. Memory", icon: <Clock size={13} className={activeTab === "institutional_memory" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "pre_registration", name: "18. Pre-Registration", icon: <Lock size={13} className={activeTab === "pre_registration" ? "text-amber-400" : "text-stone-500"} /> },
+        { id: "publication_factory", name: "19. Publication & Export", icon: <Download size={13} className={activeTab === "publication_factory" ? "text-amber-400" : "text-stone-500"} /> },
       ]
     }
   ], [activeTab]);
@@ -545,7 +563,7 @@ export default function AiStudioDashboard() {
   // ==========================================
   const handleDownloadSSRNReport = () => {
     const doc = SSRNExporter.generate(currentInput, {
-      country: validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana",
+      country: getCountryFullName(validationCountry),
       activeShockId: selectedShockId,
       activePresetName: selectedPresetId.toUpperCase()
     });
@@ -576,7 +594,7 @@ export default function AiStudioDashboard() {
 
   const handleDownloadSSRNJson = () => {
     const jsonStr = SSRNExporter.generateSSRNJson(currentInput, {
-      country: validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana",
+      country: getCountryFullName(validationCountry),
       activeShockId: selectedShockId,
       activePresetName: selectedPresetId.toUpperCase()
     });
@@ -697,28 +715,50 @@ export default function AiStudioDashboard() {
             </p>
           </div>
 
-          {/* Quick Preset Selector Buttons */}
-          <div className="flex items-center gap-1.5 bg-stone-50 p-1 rounded border border-stone-200 text-xs">
-            {CAD_PRESETS.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => handleLoadPreset(p.id)}
-                className={`px-2.5 py-1 text-[11px] font-semibold transition-colors rounded cursor-pointer ${
-                  selectedPresetId === p.id
-                    ? "bg-white text-stone-900 shadow-3xs font-bold border border-stone-200"
-                    : "text-stone-500 hover:text-stone-900"
-                }`}
+          {/* Right side controls */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center bg-stone-50 rounded border border-stone-200 px-2 py-0.5 shadow-3xs">
+              <label className="text-[10px] uppercase font-bold text-stone-500 tracking-wider mr-2">Sovereign Focus:</label>
+              <select
+                value={validationCountry}
+                onChange={(e) => setValidationCountry(e.target.value as any)}
+                className="bg-transparent border-none outline-none text-xs font-bold text-stone-850 cursor-pointer p-1"
               >
-                {p.name.split(" ")[0]}
-              </button>
-            ))}
+                <option value="ETH">Ethiopia (ETH)</option>
+                <option value="KEN">Kenya (KEN)</option>
+                <option value="NGA">Nigeria (NGA)</option>
+                <option value="GHA">Ghana (GHA)</option>
+                <option value="RWA">Rwanda (RWA)</option>
+                <option value="TZA">Tanzania (TZA)</option>
+                <option value="UGA">Uganda (UGA)</option>
+                <option value="BGD">Bangladesh (BGD)</option>
+                <option value="PAK">Pakistan (PAK)</option>
+              </select>
+            </div>
+
+            {/* Quick Preset Selector Buttons */}
+            <div className="flex items-center gap-1.5 bg-stone-50 p-1 rounded border border-stone-200 text-xs">
+              {CAD_PRESETS.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => handleLoadPreset(p.id)}
+                  className={`px-2.5 py-1 text-[11px] font-semibold transition-colors rounded cursor-pointer ${
+                    selectedPresetId === p.id
+                      ? "bg-white text-stone-900 shadow-3xs font-bold border border-stone-200"
+                      : "text-stone-500 hover:text-stone-900"
+                  }`}
+                >
+                  {p.name.split(" ")[0]}
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 
         {/* WORKSPACE AREA SCENE SELECTOR */}
         <div className="flex-1 p-8 max-w-7xl mx-auto w-full space-y-8">
              {/* TAB 1: EXECUTIVE COMMAND CENTER */}
-          {activeTab === "command_center" && (
+          {activeTab === "cad_core" && (
             <div className="space-y-6 animate-fadeIn">
               
               {/* Sovereign Performance Banner Sheet */}
@@ -732,10 +772,10 @@ export default function AiStudioDashboard() {
                     Executive Intelligence Dashboard
                   </div>
                   <h2 className="font-serif text-2xl font-bold tracking-tight text-white">
-                    Sovereign Diagnostics Index Summary
+                    {getCountryFullName(validationCountry)} Diagnostics Index Summary
                   </h2>
                   <p className="text-stone-400 text-xs leading-relaxed">
-                    Overview of synthesized macroeconomic capacity indicators and structural constraints calculated across grassroots, institutional, and administrative vectors.
+                    Overview of synthesized macroeconomic capacity indicators and structural constraints calculated across grassroots, institutional, and administrative vectors for {getCountryFullName(validationCountry)}.
                   </p>
                 </div>
 
@@ -837,13 +877,13 @@ export default function AiStudioDashboard() {
           )}
 
           {/* TAB 6: BOTTLENECK ANALYSIS & CAPABILITY GAPS */}
-          {activeTab === "bottleneck_analysis" && (
+          {activeTab === "diagnostics" && (
             <div className="space-y-6">
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs">
                 <div className="border-b border-stone-200 pb-4">
-                  <h2 className="font-serif text-lg font-bold text-stone-900">Shortfalls, Capability Gaps & Radar Alignment</h2>
+                  <h2 className="font-serif text-lg font-bold text-stone-900">{getCountryFullName(validationCountry)} Capability Gaps & Radar Alignment</h2>
                   <p className="text-stone-550 text-xs mt-1">
-                    Visualizes dynamic proximity across the four primary subsystems between the Current State (solid blue) and Mature Target limits (shaded green).
+                    Visualizes dynamic capability proximity across the major subsystems for {validationCountry}. Current State is mapped against Target architectural limits.
                   </p>
                 </div>
               </div>
@@ -914,11 +954,13 @@ export default function AiStudioDashboard() {
                   </div>
                 </div>
               </div>
+
+              <DataFlywheelFlowchart />
             </div>
           )}
 
           {/* TAB 4: DETERMINISTIC CAD INDEX */}
-          {activeTab === "cad_assessment" && (() => {
+          {activeTab === "research_inputs" && (() => {
             const attributes = [
               {
                 key: "demandReality",
@@ -1228,156 +1270,13 @@ export default function AiStudioDashboard() {
                     })}
                   </div>
                 ) : (
-                  // RESEARCH MODE: DUAL COLUMN STRUCTURED FORM WITH EMPIRICAL LOGS
-                  <div className="space-y-8 pt-2">
-                    {pillarsList.map((pName) => {
-                      const filteredAttrs = attributes.filter((a) => a.pillar === pName);
-                      let themeHeader = "text-blue-900 border-blue-200 bg-blue-50/40";
-                      
-                      if (pName.includes("Pillar II")) {
-                        themeHeader = "text-emerald-900 border-emerald-250 bg-emerald-50/30";
-                      } else if (pName.includes("Pillar III")) {
-                        themeHeader = "text-amber-900 border-amber-250 bg-amber-50/30";
-                      } else if (pName.includes("Pillar IV")) {
-                        themeHeader = "text-stone-900 border-stone-250 bg-stone-105/50";
-                      }
-
-                      return (
-                        <div key={pName} className="space-y-4">
-                          {/* Pillar Category bar */}
-                          <div className={`p-3 border-l-4 rounded-r font-serif text-xs font-bold uppercase tracking-wider flex items-center justify-between ${themeHeader}`}>
-                            <span>{pName}</span>
-                            <span className="text-[10px] font-mono font-normal">Active Attributes: {filteredAttrs.length}</span>
-                          </div>
-
-                          {/* Grid of structured forms */}
-                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                            {filteredAttrs.map((attr) => {
-                              const itemEvidence = evidenceData[attr.key] || { source: "", notes: "", confidence: "Medium" };
-                              
-                              return (
-                                <div key={attr.key} className="bg-white border border-stone-205 p-5 rounded hover:shadow-xs transition duration-150 space-y-4 relative">
-                                  {/* Item Header */}
-                                  <div className="flex justify-between items-start gap-4">
-                                    <div className="space-y-0.5">
-                                      <h4 className="font-serif font-bold text-stone-850 text-sm flex items-center gap-1.5">
-                                        {attr.name}
-                                        <span className={`text-[8.5px] px-1.5 py-0.5 rounded font-mono font-bold border uppercase ${
-                                          itemEvidence.confidence === "High" 
-                                            ? "bg-emerald-50 text-emerald-800 border-emerald-200" 
-                                            : itemEvidence.confidence === "Medium"
-                                              ? "bg-amber-50 text-amber-800 border-amber-200"
-                                              : "bg-red-50 text-red-800 border-red-200"
-                                        }`}>
-                                          {itemEvidence.confidence} Conf
-                                        </span>
-                                      </h4>
-                                      <p className="text-stone-500 text-[11px] leading-snug">{attr.desc}</p>
-                                    </div>
-
-                                    {/* Parameter Metric Input Box */}
-                                    <div className="flex items-center gap-1.5 shrink-0">
-                                      <label className="text-[10px] font-mono font-bold text-stone-605">Metric:</label>
-                                      <div className="relative">
-                                        <input
-                                          type="number"
-                                          min={attr.min}
-                                          max={attr.max}
-                                          step={attr.step}
-                                          value={attr.value}
-                                          onChange={(e) => {
-                                            const v = parseFloat(e.target.value);
-                                            if (!isNaN(v)) attr.setValue(Math.min(attr.max, Math.max(attr.min, v)));
-                                          }}
-                                          className="w-16 bg-stone-50 border border-stone-300 rounded px-2 py-1 font-mono font-bold text-stone-900 text-xs text-center focus:bg-white focus:outline-hidden focus:border-amber-850"
-                                        />
-                                        <span className="absolute right-1 text-[9px] text-stone-400 font-mono mt-0.5">
-                                          {attr.isPercent ? "%" : ""}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {/* Slider integration directly in research card */}
-                                  <div className="flex items-center gap-3">
-                                    <input
-                                      type="range"
-                                      min={attr.min}
-                                      max={attr.max}
-                                      step={attr.step}
-                                      value={attr.value}
-                                      onChange={(e) => attr.setValue(parseFloat(e.target.value))}
-                                      className="flex-1 h-1 bg-stone-100 rounded-lg appearance-none cursor-pointer accent-stone-750 hover:accent-stone-950 transition-colors"
-                                    />
-                                    <span className="text-[9px] text-stone-450 font-mono shrink-0">Scale: {attr.min}–{attr.max}</span>
-                                  </div>
-
-                                  {/* Split Form: Source & Confidence / Notes */}
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1.5 border-t border-stone-100">
-                                    
-                                    {/* Left half: Evidence Source & Confidence select */}
-                                    <div className="space-y-3">
-                                      {/* Source */}
-                                      <div className="space-y-1">
-                                        <label className="text-[10px] font-mono font-bold text-stone-550 uppercase tracking-wider block">Empirical Evidence Source</label>
-                                        <input
-                                          type="text"
-                                          value={itemEvidence.source}
-                                          placeholder="e.g. World Bank Findex Survey 2024"
-                                          onChange={(e) => handleUpdateEvidence(attr.key, "source", e.target.value)}
-                                          className="w-full bg-stone-50 border border-stone-200 rounded px-2.5 py-1.5 text-xs text-stone-800 placeholder-stone-400 focus:bg-white focus:outline-hidden focus:border-amber-805 transition duration-150"
-                                        />
-                                      </div>
-
-                                      {/* Confidence Selector */}
-                                      <div className="space-y-1">
-                                        <label className="text-[10px] font-mono font-bold text-stone-550 uppercase tracking-wider block">Metric Reliability / Trust</label>
-                                        <div className="grid grid-cols-3 bg-stone-100 rounded p-0.5 border border-stone-200">
-                                          {(["Low", "Medium", "High"] as const).map((confVal) => (
-                                            <button
-                                              key={confVal}
-                                              type="button"
-                                              onClick={() => handleUpdateEvidence(attr.key, "confidence", confVal)}
-                                              className={`py-1 text-[10px] font-mono font-bold rounded transition-all cursor-pointer ${
-                                                itemEvidence.confidence === confVal
-                                                  ? confVal === "High"
-                                                    ? "bg-emerald-700 text-white shadow-3xs"
-                                                    : confVal === "Medium"
-                                                      ? "bg-amber-700 text-white shadow-3xs"
-                                                      : "bg-red-700 text-white shadow-3xs"
-                                                  : "text-stone-500 hover:text-stone-800"
-                                              }`}
-                                            >
-                                              {confVal}
-                                            </button>
-                                          ))}
-                                        </div>
-                                      </div>
-
-                                    </div>
-
-                                    {/* Right half: Notes Text Area */}
-                                    <div className="space-y-1">
-                                      <label className="text-[10px] font-mono font-bold text-stone-550 uppercase tracking-wider block">Field Notes / Micro-Justification</label>
-                                      <textarea
-                                        rows={3}
-                                        value={itemEvidence.notes}
-                                        placeholder="Add key context, local dynamics, policy quotes, or merchant responses justifying this score..."
-                                        onChange={(e) => handleUpdateEvidence(attr.key, "notes", e.target.value)}
-                                        className="w-full bg-stone-50 border border-stone-200 rounded p-2 text-xs text-stone-800 placeholder-stone-400 focus:bg-white focus:outline-hidden focus:border-amber-805 transition duration-150 resize-y min-h-[72px]"
-                                      ></textarea>
-                                    </div>
-
-                                  </div>
-
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  // RESEARCH MODE: MULTI-STEP FORM STRUCTURED ACROSS PILLARS
+                  <ResearchModeForm 
+                    attributes={attributes}
+                    evidenceData={evidenceData}
+                    onUpdateEvidence={handleUpdateEvidence}
+                    pillarsList={pillarsList}
+                  />
                 )}
 
               </div>
@@ -1391,9 +1290,9 @@ export default function AiStudioDashboard() {
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs space-y-4">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-4">
                   <div>
-                    <h2 className="font-serif text-lg font-bold text-stone-900">Exogenous Simulation Playground</h2>
+                    <h2 className="font-serif text-lg font-bold text-stone-900">{getCountryFullName(validationCountry)} Exogenous Policy Lab</h2>
                     <p className="text-stone-550 text-xs">
-                      Introduce systemic shocks to observe downstream metric transformations.
+                      Introduce systemic regulatory and policy shocks to observe downstream metric transformations specifically for {validationCountry}.
                     </p>
                   </div>
 
@@ -1463,7 +1362,7 @@ export default function AiStudioDashboard() {
           )}
 
           {/* TAB 8: DETERMINISTIC PATHWAY TRANSITION SIMULATOR */}
-          {activeTab === "transition_simulator" && (
+          {activeTab === ("transitionsimulator" as any) && (
             <div className="space-y-6 animate-fadeIn">
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs space-y-4">
                 <div>
@@ -1504,9 +1403,9 @@ export default function AiStudioDashboard() {
             <div className="space-y-6 animate-fadeIn">
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs">
                 <div className="border-b border-stone-200 pb-4">
-                  <h2 className="font-serif text-lg font-bold text-stone-900">Probabilistic Risk Studio (Monte Carlo)</h2>
+                  <h2 className="font-serif text-lg font-bold text-stone-900">{getCountryFullName(validationCountry)} Probabilistic Risk Engine (Monte Carlo)</h2>
                   <p className="text-stone-550 text-xs mt-1">
-                    Displays risk distribution corridors overlayed on active treatment benchmarks computed via 1,000 simulated iterations.
+                    Displays risk distribution corridors overlayed on active treatment benchmarks for {validationCountry}, computed via 1,000 simulated iterations.
                   </p>
                 </div>
               </div>
@@ -1548,6 +1447,74 @@ export default function AiStudioDashboard() {
           )}
 
           {/* TAB 13: GENERAL CROSS-COUNTRY OBSERVATORY */}
+          {activeTab === "benchmark_engine" && (
+            <BenchmarkEngineTab countryCode={validationCountry} countryFullName={getCountryFullName(validationCountry)} />
+          )}
+
+          {activeTab === "knowledge_graph" && (
+            <KnowledgeGraphTab countryCode={validationCountry} countryFullName={getCountryFullName(validationCountry)} />
+          )}
+
+          {activeTab === "validation" && (
+            <ValidationTab countryCode={validationCountry} />
+          )}
+
+          {activeTab === "calibration" && (
+            <CalibrationTab countryCode={validationCountry} />
+          )}
+
+          {activeTab === "world_bank" && (
+            <ExternalDataIngestionHub 
+              sourceName="World Bank Open Data"
+              description="Ingest macroeconomic indicators, financial inclusion metrics (Findex), and structural development data via the public World Bank API."
+              endpointDesc="api.worldbank.org/v2/country/{iso}/indicator/{indicator}"
+              colorTheme="blue"
+              countryCode={validationCountry}
+              indicators={[
+                { id: "FB.ATM.TOTL.P5", name: "ATMs (per 100,000 adults)", desc: "Automated teller machines are computerized telecommunications devices...", vintage: "2022" },
+                { id: "FB.CBK.BRCH.P5", name: "Commercial bank branches", desc: "Commercial bank branches (per 100,000 adults).", vintage: "2022" },
+                { id: "FI.RES.TOTL.CD", name: "Total reserves", desc: "Total reserves (includes gold, current US$).", vintage: "2023" },
+                { id: "IT.CEL.SETS.P2", name: "Mobile cellular subscriptions", desc: "Mobile cellular telephone subscriptions (per 100 people).", vintage: "2022" },
+                { id: "FX.OWN.TOTL.ZS", name: "Account ownership at a financial institution", desc: "Account ownership at a financial institution or with a mobile-money-service provider (% of population ages 15+).", vintage: "2021" },
+                { id: "NY.GDP.MKTP.KD.ZG", name: "GDP growth (annual %)", desc: "Annual percentage growth rate of GDP at market prices based on constant local currency.", vintage: "2023" },
+              ]}
+            />
+          )}
+
+          {activeTab === "imf" && (
+            <ExternalDataIngestionHub 
+              sourceName="IMF Data Mapper"
+              description="Synchronize global financial stability indicators, balance of payments, and sovereign fiscal structural metrics directly from the IMF Data API."
+              endpointDesc="www.imf.org/external/datamapper/api/v1/{indicator}?geo={iso}"
+              colorTheme="indigo"
+              countryCode={validationCountry}
+              indicators={[
+                { id: "NGDP_RPCH", name: "Real GDP growth", desc: "Annual percentage change.", vintage: "2024" },
+                { id: "PCPIEPCH", name: "Inflation rate, end of period consumer prices", desc: "Annual percentage change in Consumer Price Index.", vintage: "2024" },
+                { id: "GGXWDG_NGDP", name: "General government gross debt", desc: "Percent of GDP.", vintage: "2023" },
+                { id: "BCA_NGDPD", name: "Current account balance", desc: "Percent of GDP.", vintage: "2023" },
+                { id: "FAS_F1", name: "FAS: Outstanding deposits", desc: "Outstanding deposits with commercial banks.", vintage: "2023" },
+                { id: "FAS_F2", name: "FAS: Outstanding loans", desc: "Outstanding loans from commercial banks.", vintage: "2023" }
+              ]}
+            />
+          )}
+
+          {activeTab === "cgap" && (
+            <ExternalDataIngestionHub 
+              sourceName="CGAP Financial Inclusion Data"
+              description="Access granular regulatory index data, microfinance indicators, and qualitative scoring from CGAP research databases for Pillar II calibration."
+              endpointDesc="data.cgap.org/api/v1/indicators?country={iso}"
+              colorTheme="emerald"
+              countryCode={validationCountry}
+              indicators={[
+                { id: "CGAP.DFS.1", name: "Digital Finance Regulatory Status", desc: "Qualitative scoring of national DFS framework.", vintage: "2023" },
+                { id: "CGAP.MFI.2", name: "Microfinance Gross Loan Portfolio", desc: "Aggregate volume of MFI lending in local currency.", vintage: "2022" },
+                { id: "CGAP.AG.3", name: "Agent Network Density", desc: "Active agents per 1,000 adults.", vintage: "2023" },
+                { id: "CGAP.WOM.4", name: "Women's Financial Access Gap", desc: "Percentage point difference in account ownership.", vintage: "2021" }
+              ]}
+            />
+          )}
+
           {activeTab === "cross_country" && (
             <div className="space-y-6">
               
@@ -1555,9 +1522,9 @@ export default function AiStudioDashboard() {
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs space-y-4">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                   <div>
-                    <h2 className="font-serif text-lg font-bold text-stone-900">Sovereign Comparative Dashboard</h2>
+                    <h2 className="font-serif text-lg font-bold text-stone-900">{getCountryFullName(validationCountry)} vs. Global Benchmark Models</h2>
                     <p className="text-stone-500 text-xs">
-                       benckmark calculated parameters across all 9 target markets under the scale-gated impact multiplier database.
+                       Benchmark calculated parameters across target structural markets under the scale-gated impact multiplier database.
                     </p>
                   </div>
 
@@ -1644,9 +1611,9 @@ export default function AiStudioDashboard() {
               {/* Elasticity Matrix (Heatmap) */}
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs space-y-4">
                 <div>
-                  <h3 className="font-serif text-sm font-bold text-stone-900">Sovereign Elasticity Heatmap Matrix</h3>
+                  <h3 className="font-serif text-sm font-bold text-stone-900">Cross-border Elasticity Heatmap Matrix: {getCountryFullName(validationCountry)} Baseline</h3>
                   <p className="text-stone-500 text-[11px] leading-normal mt-0.5">
-                    Heatmapped matrix displaying counterfactual net ARI shifts (delta ARI) for all nine countries across the 5 exogenous policy shocks.
+                    Heatmapped matrix displaying counterfactual net ARI shifts (delta ARI) for all major target countries across the 5 exogenous policy shocks.
                   </p>
                 </div>
 
@@ -1708,9 +1675,9 @@ export default function AiStudioDashboard() {
               <div className="bg-white border border-stone-250 p-6 rounded shadow-2xs space-y-4">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-stone-200 pb-4">
                   <div>
-                    <h2 className="font-serif text-lg font-bold text-stone-900">Historical Backtesting & Calibration</h2>
+                    <h2 className="font-serif text-lg font-bold text-stone-900">{getCountryFullName(validationCountry)} Historical Backtesting & Calibration</h2>
                     <p className="text-stone-500 text-xs">
-                      Fits standard bivariate OLS regressions against actual historical World Bank macroeconomic proxy vectors.
+                      Fits standard bivariate OLS regressions against actual historical World Bank macroeconomic proxy vectors for {getCountryFullName(validationCountry)}.
                     </p>
                   </div>
 
@@ -1718,21 +1685,7 @@ export default function AiStudioDashboard() {
                   <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center gap-2">
                       <label className="text-xs font-mono font-bold text-stone-605">Sovereign Donor:</label>
-                      <select
-                        value={validationCountry}
-                        onChange={(e) => setValidationCountry(e.target.value)}
-                        className="bg-white border border-stone-300 rounded p-1.5 text-xs font-serif font-bold text-stone-850"
-                      >
-                        <option value="ETH">Ethiopia (ETH)</option>
-                        <option value="KEN">Kenya (KEN)</option>
-                        <option value="NGA">Nigeria (NGA)</option>
-                        <option value="GHA">Ghana (GHA)</option>
-                        <option value="RWA">Rwanda (RWA)</option>
-                        <option value="TZA">Tanzania (TZA)</option>
-                        <option value="UGA">Uganda (UGA)</option>
-                        <option value="BGD">Bangladesh (BGD)</option>
-                        <option value="PAK">Pakistan (PAK)</option>
-                      </select>
+                      <span className="bg-stone-50 border border-stone-200 rounded p-1.5 text-xs font-mono font-bold text-stone-850">{validationCountry}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -1934,8 +1887,8 @@ export default function AiStudioDashboard() {
                             <YAxis domain={[3.5, 7.0]} tick={{ fontSize: 9.5, fontFamily: "JetBrains Mono" }} stroke="#78716c" />
                             <Tooltip />
                             <Legend wrapperStyle={{ fontSize: 10 }} />
-                            <Line type="monotone" dataKey="Treated" stroke="#1e3a8a" strokeWidth={2.5} dot={{ r: 4 }} name="Treated Unit Trend (Ethiopia + SPAR)" />
-                            <Line type="monotone" dataKey="Control" stroke="#9ca3af" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3 }} name="Control Unit Trend (Ghana Comparison Pool)" />
+                            <Line type="monotone" dataKey="Treated" stroke="#1e3a8a" strokeWidth={2.5} dot={{ r: 4 }} name={`Treated Unit Trend (${getCountryFullName(validationCountry)} + SPAR)`} />
+                            <Line type="monotone" dataKey="Control" stroke="#9ca3af" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3 }} name="Control Unit Trend (Regional Comparison Pool)" />
                           </LineChart>
                         </ResponsiveContainer>
                       </div>
@@ -2056,7 +2009,7 @@ export default function AiStudioDashboard() {
           )}
 
           {/* TAB 14: AEA RESEARCH INTEGRITY PRE-REGISTRATION */}
-          {activeTab === "research_integrity" && (
+          {activeTab === "pre_registration" && (
             <div className="space-y-6 animate-fadeIn">
               
               {/* PAP Generation console */}
@@ -2094,7 +2047,7 @@ export default function AiStudioDashboard() {
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] leading-relaxed text-stone-400">
                         <div>
-                          <strong>Pre-Registered Sovereign Unit:</strong> {validationCountry}
+                          <strong>Pre-Registered Sovereign Unit:</strong> {getCountryFullName(validationCountry)}
                         </div>
                         <div>
                           <strong>Pre-analysis Timestamp:</strong> {lastPlan.timestamp}
@@ -2164,7 +2117,7 @@ export default function AiStudioDashboard() {
                         onClick={handleDownloadSSRNReport}
                         className="bg-stone-900 hover:bg-stone-950 text-white font-mono px-4 py-2 rounded text-xs transition-colors cursor-pointer flex items-center gap-1.5 font-bold shadow animate-pulse hover:animate-none"
                       >
-                        <Download size={14} /> Download Sovereign SSRN PDF ({validationCountry} Focus)
+                        <Download size={14} /> Download Sovereign SSRN PDF ({getCountryFullName(validationCountry)} Focus)
                       </button>
                       
                       <button
@@ -2239,11 +2192,11 @@ Observations (N) & ${validationReport?.totalN || "11"} & Significance & Highly S
           )}
 
           {/* TAB 2: GOOGLE FORMS SURVEYOR INGESTION */}
-          {activeTab === "collection_hub" && (
+          {activeTab === ("collection_hub" as any) && (
             <div className="space-y-6 animate-fadeIn">
               <FlywheelWorkspace 
                 renderMode="collection_hub"
-                activeWorkspaceCountry={validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana"}
+                activeWorkspaceCountry={getCountryFullName(validationCountry)}
                 activeWorkspaceARI={currentResult.ari}
                 activeWorkspaceScores={currentResult}
                 onLoadAssessmentToWorkspace={handleLoadAssessmentToWorkspace}
@@ -2252,11 +2205,11 @@ Observations (N) & ${validationReport?.totalN || "11"} & Significance & Highly S
           )}
 
           {/* TAB 3: EVIDENCE VAULT SECURE DRIVE ARCHIVE */}
-          {activeTab === "evidence_vault" && (
+          {activeTab === "intelligence_repository" && (
             <div className="space-y-6 animate-fadeIn">
               <FlywheelWorkspace 
                 renderMode="evidence_vault"
-                activeWorkspaceCountry={validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana"}
+                activeWorkspaceCountry={getCountryFullName(validationCountry)}
                 activeWorkspaceARI={currentResult.ari}
                 activeWorkspaceScores={currentResult}
                 onLoadAssessmentToWorkspace={handleLoadAssessmentToWorkspace}
@@ -2265,11 +2218,11 @@ Observations (N) & ${validationReport?.totalN || "11"} & Significance & Highly S
           )}
 
           {/* TAB 4: DATA ASYMMETRY FLYWHEEL SHEET SYNC */}
-          {activeTab === "data_flywheel" && (
+          {activeTab === ("data_flywheel" as any) && (
             <div className="space-y-6 animate-fadeIn">
               <FlywheelWorkspace 
                 renderMode="data_flywheel"
-                activeWorkspaceCountry={validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana"}
+                activeWorkspaceCountry={getCountryFullName(validationCountry)}
                 activeWorkspaceARI={currentResult.ari}
                 activeWorkspaceScores={currentResult}
                 onLoadAssessmentToWorkspace={handleLoadAssessmentToWorkspace}
@@ -2278,11 +2231,11 @@ Observations (N) & ${validationReport?.totalN || "11"} & Significance & Highly S
           )}
 
           {/* TAB 16: INSTITUTIONAL MEMORY FIRESTORE REGISTRY */}
-          {activeTab === "institutional_memory" && (
+          {activeTab === ("institutional_memory" as any) && (
             <div className="space-y-6 animate-fadeIn">
               <FlywheelWorkspace 
                 renderMode="institutional_memory"
-                activeWorkspaceCountry={validationCountry === "ETH" ? "Ethiopia" : validationCountry === "KEN" ? "Kenya" : validationCountry === "NGA" ? "Nigeria" : "Ghana"}
+                activeWorkspaceCountry={getCountryFullName(validationCountry)}
                 activeWorkspaceARI={currentResult.ari}
                 activeWorkspaceScores={currentResult}
                 onLoadAssessmentToWorkspace={handleLoadAssessmentToWorkspace}
