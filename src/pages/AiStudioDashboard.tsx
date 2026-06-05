@@ -60,6 +60,7 @@ import { MethodologyNotes } from "../components/MethodologyNotes";
 import { MonteCarloChart } from "../components/MonteCarloChart";
 import { CausalValidationPanel } from "../components/CausalValidationPanel";
 import FlywheelWorkspace from "../components/FlywheelWorkspace";
+import { FirestoreRepository, SovereignSnapshot } from "../core/firebase_service";
 
 // Recharts Imports
 import {
@@ -784,11 +785,21 @@ export default function AiStudioDashboard() {
                       onClick={async () => {
                         const name = (document.getElementById('assessment-name') as HTMLInputElement).value;
                         if (!name) return;
-                        await fetch('/api/assessments', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ id: name, data: currentInput })
-                        });
+                        
+                        // Construct the snapshot using the existing FirestoreRepository schema
+                        const snapshot: SovereignSnapshot = {
+                          id: name,
+                          countryId: validationCountry.toLowerCase(),
+                          countryName: getCountryFullName(validationCountry),
+                          creatorId: "user-system", // Should ideally be dynamic
+                          creatorEmail: "user@sovereign.org",
+                          timestamp: new Date().toISOString(),
+                          results: currentResult,
+                          inputs: currentInput,
+                          evidenceCount: 0
+                        };
+                        
+                        await FirestoreRepository.saveAssessment(snapshot);
                         alert('Assessment Saved');
                       }}
                       className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1 rounded"
@@ -799,10 +810,15 @@ export default function AiStudioDashboard() {
                       onClick={async () => {
                         const name = (document.getElementById('assessment-name') as HTMLInputElement).value;
                         if (!name) return;
-                        const res = await fetch(`/api/assessments/${name}`);
-                        const data = await res.json();
-                        handleLoadAssessmentToWorkspace(data);
-                        alert('Assessment Loaded');
+                        
+                        const assessments = await FirestoreRepository.getAssessments();
+                        const found = assessments.find(a => a.id === name);
+                        if (found) {
+                          handleLoadAssessmentToWorkspace(found.inputs);
+                          alert('Assessment Loaded');
+                        } else {
+                          alert('Assessment not found');
+                        }
                       }}
                       className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded"
                     >
