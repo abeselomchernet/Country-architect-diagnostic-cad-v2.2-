@@ -1,6 +1,6 @@
 {
   "name": "CAD v2.2 Framework",
-  "description": "Universal assessment framework for emerging economies. Diagnose implementation gaps, institutional translation capacity, and market formation readiness.",
+  "description": "Country Architect Operating System (CAOS) and Data Asymmetry Flywheel Platform. Consolidates Google Forms field survey ingestion, live Google Sheets, Google Drive Evidence Vault, and Firebase Firestore alongside the CAD v2.2 deterministic simulation engines.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

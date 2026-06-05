@@ -714,6 +714,76 @@ export class SSRNExporter {
 
     return doc;
   }
+
+  static generateSSRNJson(input: CADInput, options?: SSRNReportOptions): string {
+    const result = CADEngine.compute(input);
+    let afterInput = { ...input };
+    if (options?.activeShockId) {
+      const targetShock = PolicyShocks[options.activeShockId];
+      if (targetShock) {
+        afterInput = targetShock.apply({ ...input });
+      }
+    }
+    const afterResult = CADEngine.compute(afterInput);
+
+    const ssrnJsonData = {
+      manifest_type: "SSRN academic Submission Manifest",
+      metadata: {
+        title: options?.title ?? "Quantifying Bottom-Up Coordination Failures in Digital Public Wealth Corridors",
+        author: options?.author ?? "Abeselom Girum Chernet",
+        email: options?.email ?? "abeselomgirum@gmail.com",
+        country: options?.country ?? "Sub-Saharan G2P Pay Corridors",
+        jel_classification: ["G21", "O16", "P48", "C63", "O33"],
+        keywords: [
+          "Digital Public Infrastructure (DPI)",
+          "Institutional Translation Capacity",
+          "Grassroots System Viability",
+          "Lock Intensity"
+        ]
+      },
+      econometric_model: {
+        engine_version: "CAD v2.2 SSR-Deterministic Model",
+        structural_parameters: {
+          baseline: input,
+          after_policy_shock: afterInput
+        },
+        calibration_results: {
+          pre_shock: {
+            gsv: result.gsv,
+            itc: result.itc,
+            sdr: result.sdr,
+            afl: result.afl,
+            lic: result.lic,
+            ari: result.ari,
+            binding_constraint: result.bindingConstraint,
+            classification: result.classification,
+            system_failure_probability_pct: result.systemFailureProbability
+          },
+          post_shock: {
+            gsv: afterResult.gsv,
+            itc: afterResult.itc,
+            sdr: afterResult.sdr,
+            afl: afterResult.afl,
+            lic: afterResult.lic,
+            ari: afterResult.ari,
+            binding_constraint: afterResult.bindingConstraint,
+            classification: afterResult.classification,
+            system_failure_probability_pct: afterResult.systemFailureProbability
+          },
+          deltas: {
+            gsv: afterResult.gsv - result.gsv,
+            itc: afterResult.itc - result.itc,
+            sdr: afterResult.sdr - result.sdr,
+            afl: afterResult.afl - result.afl,
+            lic: afterResult.lic - result.lic,
+            ari: afterResult.ari - result.ari
+          }
+        },
+        reproducibility_hash: btoa(JSON.stringify(input)).slice(0, 16)
+      }
+    };
+    return JSON.stringify(ssrnJsonData, null, 2);
+  }
 }
 
 // Utility mapper to avoid crash if some code checks shocks in a custom pattern

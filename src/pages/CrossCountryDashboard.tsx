@@ -4,6 +4,7 @@ import { PolicyShocks } from "../core/policy_shock_engine";
 import { MultiCountryEngine } from "../core/multi_country_engine";
 import { ElasticityEngine, ElasticityMatrixBuilder } from "../core/elasticity_engine";
 import { SSRNExporter } from "../export/ssrnExporter";
+import ElasticityHeatmap from "../components/ElasticityHeatmap";
 import { CADEngine, CADInput } from "../core/cadEngine";
 import { MultiCountryPaperGenerator, PaperInput } from "../export/ssrn/multiCountryPaperGenerator";
 import { SSRNPaperCompiler, CompiledSSRNPaper } from "../export/ssrn/ssrnPaperCompiler";
@@ -532,6 +533,9 @@ export default function CrossCountryDashboard() {
           </table>
         </div>
       </div>
+
+      {/* RECHARTS COMPLIANT REFORM ELASTICITY HEATMAP */}
+      <ElasticityHeatmap />
 
       {/* SENSITIVITY INDICES MATRIX / HEATMAP ROW */}
       <div className="bg-white border border-stone-250 p-5 shadow-xs rounded-xs space-y-4">

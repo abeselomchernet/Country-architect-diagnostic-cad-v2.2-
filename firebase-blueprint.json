@@ -1,0 +1,168 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Information about the registered researcher or policymaker.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique identifier matching request.auth.uid"
+        },
+        "email": {
+          "type": "string",
+          "description": "Verified Google workspace email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable full name of the researcher"
+        },
+        "role": {
+          "type": "string",
+          "description": "Assigned policy engineering role (e.g., Principal Investigator)"
+        },
+        "country": {
+          "type": "string",
+          "description": "Primary sovereign focus region"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Temporal server update timestamp"
+        }
+      },
+      "required": ["uid", "email", "displayName"]
+    },
+    "SovereignAssessment": {
+      "title": "SovereignAssessment",
+      "description": "A complete, calibrated CAD v2.2 Sovereign Assessment model record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique alphanumeric assessment ID"
+        },
+        "countryId": {
+          "type": "string",
+          "description": "The target sovereign nation code (e.g., ethiopia)"
+        },
+        "countryName": {
+          "type": "string",
+          "description": "The display name of the nation"
+        },
+        "creatorId": {
+          "type": "string",
+          "description": "The auth UID of the creator"
+        },
+        "creatorEmail": {
+          "type": "string",
+          "description": "Email of the assessing researcher"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time of creation"
+        },
+        "ari": {
+          "type": "number",
+          "description": "Computed absolute Sovereign Architect Readiness Index"
+        },
+        "gsv": {
+          "type": "number",
+          "description": "Grassroots System Viability index score"
+        },
+        "itc": {
+          "type": "number",
+          "description": "Institutional Translation Capacity index score"
+        },
+        "sdr": {
+          "type": "number",
+          "description": "Sovereign Digital Readiness index score"
+        },
+        "afl": {
+          "type": "number",
+          "description": "Administrative Feasibility Leverage index score"
+        },
+        "lic": {
+          "type": "number",
+          "description": "Sovereign Lock-In Friction Coefficient"
+        },
+        "sfp": {
+          "type": "number",
+          "description": "System Failure Probability percentage"
+        },
+        "classification": {
+          "type": "string",
+          "description": "Sovereign development band designation"
+        },
+        "bindingConstraint": {
+          "type": "string",
+          "description": "Identified primary model bottleneck"
+        },
+        "evidenceFilesCount": {
+          "type": "number",
+          "description": "Number of reference policy briefs appended"
+        },
+        "formSubmissionId": {
+          "type": "string",
+          "description": "The linked Google Form ingestion signature ID"
+        }
+      },
+      "required": ["id", "countryId", "countryName", "creatorId", "ari", "gsv", "itc"]
+    },
+    "EvidenceAttachment": {
+      "title": "EvidenceAttachment",
+      "description": "Reference documents stored in Google Drive validating specific indicator scores.",
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "description": "Unique Google Drive alphanumeric identifier"
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Filename of the source policy decree or report"
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "Document mime-type format"
+        },
+        "sizeBytes": {
+          "type": "number",
+          "description": "File capacity footprint"
+        },
+        "targetIndicator": {
+          "type": "string",
+          "description": "The target CAD indicator metric validating (e.g. Data Legibility)"
+        },
+        "ownerEmail": {
+          "type": "string",
+          "description": "Owner of the associated Drive workspace"
+        },
+        "linkedAssessmentId": {
+          "type": "string",
+          "description": "The parent SovereignAssessment ID reference"
+        },
+        "hashSignature": {
+          "type": "string",
+          "description": "SHA-256 verification signature of document"
+        }
+      },
+      "required": ["fileId", "fileName", "targetIndicator", "linkedAssessmentId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Sovereign Lab registered researchers index"
+    },
+    "/assessments/{assessmentId}": {
+      "schema": "SovereignAssessment",
+      "description": "Calibrated country diagnostic histories records"
+    },
+    "/assessments/{assessmentId}/evidence/{evidenceId}": {
+      "schema": "EvidenceAttachment",
+      "description": "Linked Google Drive research documents validating numeric scores"
+    }
+  }
+}
